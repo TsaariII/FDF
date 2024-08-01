@@ -10,13 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
+
 int	main(int argc, char **argv)
 {
-	if (argc == 2)
-	{
-		
+	t_fdf	fdf;
+	t_pixel	*dots;
 
-	}
-	else
-		error_msg();
+	if (argc != 2)
+		error();
+	format_validation(argv[1]);
+	map_data(argv[1], &fdf.map);
+	dots = ft_calloc(fdf.map.len, sizeof(t_pixel));
+	if (!dots)
+		error();
+	draw_map(&fdf, dots);
+	mlx_loop_hook(fdf.mlx, ft_hook, &fdf);
+	mlx_loop(fdf.mlx);
+	free(fdf.map.pixel_info);
+	free(dots);
+	mlx_terminate(fdf.mlx);
+	return();
+}
+void	format_validation(char *str)
+{
+	int	len;
+
+	len = ft_strlen(str);
+	if (ft_strncmp(&str[len - 4], ".fdf", 4) != 0)
+		error();
 }

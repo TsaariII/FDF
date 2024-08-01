@@ -61,7 +61,7 @@ CFLAGS	= -Wall -Wextra -Werror -g
 all:	$(NAME)
 
 %.o: %.c
-		$(CC) $(CFLAGS) -c -I $(HEAD) $< -o $@
+		@$(CC) $(CFLAGS) -c -I $(HEAD) $< -o $@
 
 $(NAME):	$(OBJS)
 				$(AR) $(NAME) $(OBJS)
