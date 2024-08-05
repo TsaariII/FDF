@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:45:23 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/05/16 11:00:55 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:21:59 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		ft_strncmp(char const *s1, char const *s2, size_t num);
 size_t	ft_strlcat(char *dest, char const *src, size_t size);
 size_t	ft_strlcpy(char *dest, char const *src, size_t size);
 size_t	ft_strlen(char const *str);
-t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 void	ft_bzero(void *ptr, size_t num);
