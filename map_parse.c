@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/05 14:46:53 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:37:15 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	map_data(t_map *map, char *file)
 {
 	int fd;
 
-	kick_off_map(t_map *map);
+	kick_off_map(map);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		error();
@@ -27,7 +27,7 @@ void	map_data(t_map *map, char *file)
 	if (!map->dots_array)
 		error();
 	map_dots(map);
-	dot_colours(mpa, map->dots_array, map->colours);
+	dot_colours(map, map->dots_array, map->colour);
 	free(map->map_info);
 	map->map_info = NULL;
 	close(fd);
@@ -98,7 +98,7 @@ static int	dots_to_map(char *line, t_map *map, int line_num)
 		map->dots_array[id].axels[Y] = line_num - map->dimension.axels[Y] / 2;
 		map->dots_array[id].axels[Z] = ft_atoi(dot[i]);
 		if (ft_strchr(dot[i], ','))
-			map->dots_array[id].hex_colour = paint_hexcolour(dot[i]);
+			map->dots_array[id].colour_hex = paint_hexcolour(dot[i]);
 		calculate_z(map, id);
 		i++;
 		id++;

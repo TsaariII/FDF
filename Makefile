@@ -1,8 +1,7 @@
 NAME := fdf
 
 SRC =	fdf.c\
-		draw.c\
-		map_parse.c
+		$(addprefix fdf/, colours.c draw_utils.c draw.c initialize.c map_parse.c)
 
 FLAGS = -Wall -Werror -Wextra
 

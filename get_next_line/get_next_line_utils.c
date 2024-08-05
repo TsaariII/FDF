@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:55:39 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/06/10 13:46:51 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:23:52 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_gnl_list	*appender(t_gnl_list **list, char *buffer, int c)
 	return (*list);
 }
 
-t_gnl_list	*ft_lstlast(t_gnl_list *list)
+t_gnl_list	*lstlast(t_gnl_list *list)
 {
 	t_gnl_list	*node;
 

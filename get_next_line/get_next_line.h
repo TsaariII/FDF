@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:56:00 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/06/13 10:28:53 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:23:39 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char		*get_next_line(int fd);
 int			find_nl(t_gnl_list *list);
 int			line_till_nl(t_gnl_list *list);
 t_gnl_list	*appender(t_gnl_list **list, char *buffer, int c);
-t_gnl_list	*ft_lstlast(t_gnl_list *list);
+t_gnl_list	*lstlast(t_gnl_list *list);
 void		create_list(t_gnl_list **list, int fd);
 void		list_emptier(t_gnl_list **list, t_gnl_list **node);
 void		getting_line(t_gnl_list *list, char **next_l);
