@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:54:42 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/06/13 10:28:46 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:45:45 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	find_nl(t_gnl_list *list)
 
 	if (!list)
 		return (0);
-	line = ft_lstlast(list);
+	line = lstlast(list);
 	i = 0;
 	while (line->l_buffer[i])
 	{

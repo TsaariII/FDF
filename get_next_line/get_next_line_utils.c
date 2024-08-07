@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:55:39 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/05 16:23:52 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:46:27 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_gnl_list	*appender(t_gnl_list **list, char *buffer, int c)
 	new_n->l_buffer[i] = '\0';
 	if (!(*list))
 		return (*list = new_n);
-	last_n = ft_lstlast(*list);
+	last_n = lstlast(*list);
 	last_n->next = new_n;
 	return (*list);
 }
@@ -90,7 +90,7 @@ void	reset_list(t_gnl_list **list)
 		return ;
 	}
 	clean_n->next = NULL;
-	last_n = ft_lstlast(*list);
+	last_n = lstlast(*list);
 	clean_n->l_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!last_n || !clean_n->l_buffer)
 	{

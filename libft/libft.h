@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:45:23 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/05 16:21:59 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:06:07 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_atoi(char const *str);
+int		ft_atoi_base(const char *str, int base);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isalnum(int ch);
@@ -46,10 +47,12 @@ int		ft_strncmp(char const *s1, char const *s2, size_t num);
 size_t	ft_strlcat(char *dest, char const *src, size_t size);
 size_t	ft_strlcpy(char *dest, char const *src, size_t size);
 size_t	ft_strlen(char const *str);
+t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 void	ft_bzero(void *ptr, size_t num);
 void	*ft_calloc(size_t num_elem, size_t elem_size);
+void	ft_free_array(char **array);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstclear(t_list **lst, void (*del)(void*));

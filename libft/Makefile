@@ -1,8 +1,10 @@
 NAME	= libft.a
 
 SRC		= ft_atoi.c\
+		ft_atoi_base.c\
 		ft_bzero.c\
 		ft_calloc.c\
+		ft_free_array.c\
 		ft_isalnum.c\
 		ft_isalpha.c\
 		ft_isascii.c\
@@ -41,6 +43,7 @@ BONUS_SRCS	= ft_lstadd_back_bonus.c\
 			ft_lstclear_bonus.c\
 			ft_lstdelone_bonus.c\
 			ft_lstiter_bonus.c\
+			ft_lstlast_bonus.c\
 			ft_lstmap_bonus.c\
 			ft_lstnew_bonus.c\
 			ft_lstsize_bonus.c

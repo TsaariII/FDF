@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/05 16:35:42 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:26:09 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,37 @@ void	set_up_fdf(t_fdf *fdf)
 {
 	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FDF", true);
 	if (!fdf->mlx)
-		error();
+		error(NULL, "MLX fail");
 	fdf->image = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
 	if (!fdf->image)
-		error_mlx();
+		error_mlx(fdf);
 	if (mlx_image_to_window(fdf->mlx, fdf->image, 0, 0) < 0)
-		error_mlx();
+		error_mlx(fdf);
 }
 
 void	base_colours(t_map *map)
 {
-	map->colours.background = BIANCHI;
-	map->colours.top = WHITE;
-	map->colours.bottom = BLACK;
-	map->colours.base = YELLOW;
+	map->colour.background = BIANCHI;
+	map->colour.top = WHITE;
+	map->colour.bottom = BLACK;
+	map->colour.base = YELLOW;
 }
 
 void	base_pixel(uint8_t *buffer, int colour, int alpha)
 {
 	if (little_big_endian() == 0)
 	{
-		buffer[R] = colour;
-		buffer[G] = colour >> 8;
-		buffer[B] = colour >> 16;
-		buffer[A] =	alpha;
+		buffer[RED] = colour;
+		buffer[GREEN] = colour >> 8;
+		buffer[BLUE] = colour >> 16;
+		buffer[ALPHA] =	alpha;
 	}
 	else
 	{
-		buffer[R] = colour >> 16;
-		buffer[G] = colour >> 8;
-		buffer[B] = colour;
-		buffer[A] =	alpha;
+		buffer[RED] = colour >> 16;
+		buffer[GREEN] = colour >> 8;
+		buffer[BLUE] = colour;
+		buffer[ALPHA] =	alpha;
 	}
 }
 
@@ -76,9 +76,9 @@ void	dimensions(t_map *map)
 		while (ft_isalnum(map->map_info[h][w]))
 			w++;
 		if (w != len)
-			error();
+			error(NULL, "Invalid map");
 		h++;
 	}
-	map->dimension[X] = w;
-	map->dimension[Y] = h;
+	map->dimension.axels[X] = w;
+	map->dimension.axels[Y] = h;
 }

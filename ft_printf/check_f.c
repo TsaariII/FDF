@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:35:05 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/05/27 14:52:07 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:52:57 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_form(char const *str, va_list args, int *check)
 		else if (*str == '%')
 		{
 			str++;
-			n += f_id(str, args, check);
+			n += form_id(str, args, check);
 			if (*check == -1)
 				return (-1);
 		}

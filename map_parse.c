@@ -6,33 +6,11 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/05 16:37:15 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:32:08 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	map_data(t_map *map, char *file)
-{
-	int fd;
-
-	kick_off_map(map);
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		error();
-	map->map_info = read_data(map, fd);
-	dimensions(map);
-	map->len = map->dimension.axels[X] * map->dimension.axels[Y];
-	map->dots_array = ft_calloc(map->len, sizeof(t_pixel));
-	if (!map->dots_array)
-		error();
-	map_dots(map);
-	dot_colours(map, map->dots_array, map->colour);
-	free(map->map_info);
-	map->map_info = NULL;
-	close(fd);
-}
-
 
 static char	**read_data(t_map *map, int fd)
 {
@@ -43,7 +21,7 @@ static char	**read_data(t_map *map, int fd)
 
 	data = ft_calloc(1, sizeof(char));
 	if (!data)
-		error();
+		error(map, "Malloc fail");
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -53,7 +31,7 @@ static char	**read_data(t_map *map, int fd)
 		{
 			free(line);
 			free(temp);
-			error();
+			error(map,"Malloc fail");
 		}
 		free(temp);
 		free(line);
@@ -61,23 +39,6 @@ static char	**read_data(t_map *map, int fd)
 	}
 	split_result = ft_split(data, '\n');
 	return (split_result);
-}
-
-static void	dots_on_map(t_map *map)
-{
-	int		i;
-	char	**temp;
-
-	i = 0;
-	temp = map->map_info;
-	if (map->map_info[i] == '\0')
-		error();
-	while (temp[i])
-	{
-		dots_to_map(temp[i], map, i);
-		i++
-	}
-	ft_free_array(temp);
 }
 
 static int	dots_to_map(char *line, t_map *map, int line_num)
@@ -88,12 +49,12 @@ static int	dots_to_map(char *line, t_map *map, int line_num)
 
 	dot = ft_split(line, ' ');
 	if (!dot)
-		return (ERROR_MALLOC);
+		return (0);
 	i = 0;
 	id = 0;
 	while (dot[i] && dot[i][0])
 	{
-		is_this_dot_valid(dot[i], map);
+		this_dot_is_valid(dot[i], map);
 		map->dots_array[id].axels[X] = i - map->dimension.axels[X] / 2;
 		map->dots_array[id].axels[Y] = line_num - map->dimension.axels[Y] / 2;
 		map->dots_array[id].axels[Z] = ft_atoi(dot[i]);
@@ -106,4 +67,42 @@ static int	dots_to_map(char *line, t_map *map, int line_num)
 	if (i != map->dimension.axels[X] && line_num != map->dimension.axels[Y])
 		uneven(++id, line_num, map);
 	return (EXIT_SUCCESS);
+}
+
+static void	dots_on_map(t_map *map)
+{
+	int		i;
+	char	**temp;
+
+	i = 0;
+	temp = map->map_info;
+	if (map->map_info[i] == NULL)
+		error(NULL, "Invalid map");
+	while (temp[i])
+	{
+		dots_to_map(temp[i], map, i);
+		i++;
+	}
+	ft_free_array(temp);
+}
+
+void	map_data(t_map *map, char *file)
+{
+	int fd;
+
+	kick_off_map(map);
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error(NULL, "Open error");
+	map->map_info = read_data(map, fd);
+	dimensions(map);
+	map->len = map->dimension.axels[X] * map->dimension.axels[Y];
+	map->dots_array = ft_calloc(map->len, sizeof(t_pixel));
+	if (!map->dots_array)
+		error(NULL, "Malloc fail");
+	dots_on_map(map);
+	dot_colours(map, map->dots_array, map->colour);
+	free(map->map_info);
+	map->map_info = NULL;
+	close(fd);
 }
