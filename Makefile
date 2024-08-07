@@ -18,7 +18,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 LIBFT_DIR = ./libft
 
-PRINTF = $(PRINTF_DIR)/ft_printf.a
+PRINTF = $(PRINTF_DIR)/libftprintf.a
 
 PRINTF_DIR = ./ft_printf
 
@@ -54,8 +54,8 @@ OBJS = $(SRC:.c=.o)
 		cc $(FLAGS) -c $< -o $@ $(HEADS)
 
 $(NAME): $(OBJS)
-		@cc $(OBJS) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME)
-		@echo "\n\033[0;32mLet's examine this map!\033[0m\n]"
+		@cc $(OBJS) $(PRINTF) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME)
+		@echo "\n\033[0;32mLet's examine this map!\033[0m\n"
 
 clean:
 		@rm -f $(OBJS)
@@ -64,10 +64,12 @@ clean:
 		@$(MAKE) -C $(PRINTF_DIR) clean
 
 fclean:
-		rm -f $(NAME)
+		@rm -f $(NAME)
+		@rm -f $(OBJS)
 		@$(MAKE) -C $(PRINTF_DIR) fclean
 		@$(MAKE) -C $(LIBFT_DIR) fclean
-		rm -rf $(MLX)
+		@rm -rf $(MLX)
+		@rm -f fdf.a
 
 re: fclean all
 
