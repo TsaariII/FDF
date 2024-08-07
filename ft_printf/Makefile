@@ -20,7 +20,7 @@ AR		= ar rcs
 OBJS	= $(SRC:.c=.o)
 
 %.o: %.c
-		$(CC) $(FLAGS) -c -I $(HEAD) $< -o $@
+		@$(CC) $(FLAGS) -c -I $(HEAD) $< -o $@
 
 all: $(NAME)
 

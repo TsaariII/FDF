@@ -51,7 +51,7 @@ OBJS = $(SRC:.c=.o)
 
 
 %.o: %.c
-		cc $(FLAGS) -c $< -o $@ $(HEADS)
+		@cc $(FLAGS) -c $< -o $@ $(HEADS)
 
 $(NAME): $(OBJS)
 		@cc $(OBJS) $(PRINTF) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME)
@@ -70,6 +70,7 @@ fclean:
 		@$(MAKE) -C $(LIBFT_DIR) fclean
 		@rm -rf $(MLX)
 		@rm -f fdf.a
+		@echo "\n\033[0;31mAll is gone\033[0m\n"
 
 re: fclean all
 
