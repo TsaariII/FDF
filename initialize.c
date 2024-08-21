@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/20 14:57:03 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/21 09:39:07 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_up_fdf(t_fdf *fdf)
 {
-	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FDF", true);
+	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FdF", true);
 	if (!fdf->mlx)
 		error(NULL, "MLX fail");
 	fdf->image = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);

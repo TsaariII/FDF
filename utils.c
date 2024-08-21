@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/20 11:42:29 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:36:17 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,12 @@ void	this_dot_is_valid(char *str, t_map *map)
 	}
 }
 
+bool	valid_dot(t_pixel *dot)
+{
+	if (dot->axels[X] < 0 || dot->axels[X] > WIDTH)
+		return (false);
+	if (dot->axels[Y] < 0 || dot->axels[Y] > HEIGHT)
+		return (false);
+	else
+		return (true);
+}

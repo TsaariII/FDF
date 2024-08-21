@@ -6,13 +6,14 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/07 16:36:56 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:49:45 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include "MLX42/include/MLX42/MLX42.h"
+//# include "MLX42/include/MLX42/MLX42_Int.h"
 # include "libft/libft.h"
 # include "get_next_line/get_next_line.h"
 # include "ft_printf/ft_printf.h"
@@ -32,6 +33,8 @@
 # define X_ANGLE 30
 # define Y_ANGLE 330
 # define Z_ANGLE 30
+
+# define M_PI 3.14159265358979323846
 
 typedef enum s_rgb
 {
@@ -65,14 +68,14 @@ typedef	struct s_pixel
 
 typedef struct	s_map
 {
+	char		**map_info;
+	int			len;
+	int			min_z;
+	float		scale;
 	t_pixel		*dots_array;
 	t_pixel		dimension;
 	t_pixel		origo;
 	t_colours	colour;
-	char		**map_info;
-	int			len;
-	float		scale;
-	int			min_z;
 }	t_map;
 
 typedef struct s_fdf
@@ -85,10 +88,10 @@ typedef struct s_fdf
 /*draw.c*/
 void	connect_dots(t_fdf *fdf, t_pixel *dots);
 void	copy_dots(t_pixel *source, t_pixel *destination, int len);
-void	draw_line(t_fdf *fdf, t_pixel start, t_pixel end);
+void	draw_lines(t_fdf *fdf, t_pixel *dots);
 void	draw_map(t_fdf *fdf, t_pixel *dots);
 void	geo_map_shaper(t_fdf *fdf, t_pixel *dots);
-void	place_pixel(mlx_image_t *image, float x, float y, int32_t colour);
+void	place_dot(mlx_image_t *image, float x, float y, int32_t colour);
 
 /*draw_utils.c*/
 t_pixel	multiply_matrix(float matrix[3][3], t_pixel dot);
@@ -96,6 +99,7 @@ void	scale_z(t_pixel *dots, t_map *map);
 void	rotate_x(t_pixel *dots, t_pixel *projection, float angle, int len);
 void	rotate_y(t_pixel *dots, t_pixel *projection, float angle, int len);
 void	rotate_z(t_pixel *dots, t_pixel *projection, float angle, int len);
+void	line(t_fdf *fdf, t_pixel start, t_pixel end);
 void	scale_dots(t_pixel *array, float scale, int len);
 void	center(t_pixel *dots, t_pixel origo, int len);
 
@@ -126,5 +130,6 @@ void	fit_it(t_fdf *fdf, t_pixel *dots);
 void	uneven(int x, int line_num, t_map *map);
 void	calculate_z(t_map *map, int id);
 void	this_dot_is_valid(char *str, t_map *map);
+bool	valid_dot(t_pixel *dot);
 
 #endif

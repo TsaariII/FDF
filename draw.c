@@ -6,20 +6,37 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/20 15:13:56 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:55:58 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	copy_dots(t_pixel *source, t_pixel *destination, int len)
+
+
+void	copy_dots(t_pixel *source, t_pixel *dest, int len)
 {
-	int	i;
-	i = 0;
-	while (i < len)
+	int	n;
+
+	n = 0;
+	while (n < len)
 	{
-		destination[i] = source[i];
-		i++;
+		dest[n] = source[n];
+		n++;
+	}
+}
+
+void	center(t_pixel *dots, t_pixel origo, int len)
+{
+	int	n;
+
+	n = 0;
+	while (n < len)
+	{
+		dots[n].axels[X] = dots[n].axels[X] + origo.axels[X];
+		dots[n].axels[Y] = dots[n].axels[Y] + origo.axels[Y];
+		dots[n].axels[Z] = dots[n].axels[Z] + origo.axels[Z];
+		n++;
 	}
 }
 
@@ -33,72 +50,31 @@ void	geo_map_shaper(t_fdf *fdf, t_pixel *dots)
 	center(dots, fdf->map.origo, fdf->map.len);
 }
 
-void	set_start_end(t_pixel *dot, t_fdf *fdf, int line)
+static void x_y_line(t_pixel *dot, t_fdf *fdf, int current)
 {
-	int	i;
-	int	end_x;
-	int	end_y;
-	int	width;
-	int	height;
+	int i;
+	int e_x;
+	int e_y;
+	int width;
+	int height;
 
 	i = 0;
 	width = (int)round(fdf->map.dimension.axels[X]);
 	height = (int)round(fdf->map.dimension.axels[Y]);
 	while (i < width)
 	{
-		end_x = i + 1;
-		if (end_x >= width)
-			end_x = width - 1;
-		end_y = i + width;
-		draw_line(fdf, dot[i], dot[end_x]);
-		if (line + 1 < height)
-			draw_line(fdf, dot[i], dot[end_x]);
+		e_x = i + 1;
+		if (e_x >= width)
+			e_x = width + 1;
+		e_y = i + width;
+		line(fdf, dot[i], dot[e_x]);
+		if (current + 1 < height)
+			line(fdf, dot[i], dot[e_y]);
 		i++;
 	}
 }
 
-void	place_pixel(mlx_image_t *image, float x, float y, int32_t colour)
-{
-	int	pixel;
-	int alpha;
-
-	alpha = 0xFF;
-	if (x > WIDTH || y > HEIGHT || x < 0 || y < 0)
-		return ;
-	pixel = ((int)round(y) * WIDTH * 4) + ((int)round(x) * 4);
-	base_pixel(&image->pixels[pixel], colour, alpha);
-}
-
-
-void	draw_line(t_fdf *fdf, t_pixel start, t_pixel end)
-{
-	float	step;
-	int		n;
-	t_pixel	delta;
-	t_pixel	dot;
-
-	n = 0;
-	delta.axels[X] = end.axels[X] - start.axels[X];
-	delta.axels[Y] = end.axels[Y] - start.axels[Y];
-	if (delta.axels[X] >= delta.axels[Y])
-		step = delta.axels[X];
-	else
-		step = delta.axels[Y];
-	delta.axels[X] = delta.axels[X] / step;
-	delta.axels[Y] = delta.axels[Y] / step;
-	dot.axels[X] = start.axels[X];
-	dot.axels[Y] = start.axels[Y];
-
-	while (n < step)
-	{
-		mlx_put_pixel(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
-		dot.axels[X] = dot.axels[X] + delta.axels[X];
-		dot.axels[Y] = dot.axels[Y] + delta.axels[Y];
-		n++;
-	}
-}
-
-void	connect_dots(t_fdf *fdf, t_pixel *dots)
+void draw_lines(t_fdf *fdf, t_pixel *dots)
 {
 	int	i;
 
@@ -106,16 +82,26 @@ void	connect_dots(t_fdf *fdf, t_pixel *dots)
 	fit_it(fdf, dots);
 	while (i < fdf->map.len)
 	{
-		set_start_end(&dots[i], fdf, i / fdf->map.dimension.axels[X]);
+		x_y_line(&dots[i],fdf, i / fdf->map.dimension.axels[X]);
 		i = i + fdf->map.dimension.axels[X];
 	}
 }
-
 
 void	draw_map(t_fdf *fdf, t_pixel *dots)
 {
 	copy_dots(fdf->map.dots_array, dots, fdf->map.len);
 	geo_map_shaper(fdf, dots);
 	background(fdf, fdf->map.colour.background);
-	connect_dots(fdf, dots);
+	draw_lines(fdf, dots);
+}
+
+void	place_dot(mlx_image_t *image, float x, float y, int32_t colour)
+{
+	int dot;
+	int alpha;
+	alpha = 0xFF;
+	if (x > WIDTH || y > HEIGHT || x < 0 || y < 0)
+		return ;
+	dot = ((int)round(y) * WIDTH * 4) + ((int)round(x) * 4);
+	base_pixel(&image->pixels[dot], colour, alpha);
 }
