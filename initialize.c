@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/07 16:26:09 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:57:03 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,22 @@ void	dimensions(t_map *map)
 {
 	int	w;
 	int	h;
+	int	j;
 	int len;
 
 	w = 0;
 	h = 0;
-	len = ft_strlen(map->map_info[0]);
+	len = ft_countchar(map->map_info[0], ' ');
 	while (map->map_info[h])
 	{
 		w = 0;
-		while (ft_isalnum(map->map_info[h][w]))
-			w++;
+		j = 0;
+		while (j <= (int)ft_strlen(map->map_info[h]))
+		{
+			if (ft_isdigit(map->map_info[h][j]))
+				w++;
+			j++;
+		}
 		if (w != len)
 			error(NULL, "Invalid map");
 		h++;

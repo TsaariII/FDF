@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/07 16:39:29 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/20 11:42:29 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	this_dot_is_valid(char *str, t_map *map)
 {
 	while (*str)
 	{
-		if (ft_isalnum(*str) || *str == ',' || *str == '\n' || *str == '-')
+		if (ft_isalnum(*str) || *str == ',' || *str == '-')
 		{
 			if (*str >= 'G' && *str <= 'Z' && *str != 'X')
 				error(map, "Invalid map");
-			if (*str >= 'g'&& *str <= 'z' && *str !='x')
+			if (*str >= 'g' && *str <= 'z' && *str !='x')
 				error(map, "Invalid map");
 		}
 		else

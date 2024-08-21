@@ -10,7 +10,7 @@ SRC =	fdf.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 OFLAGS = -ldl -lglfw -pthread -lm
 
@@ -55,7 +55,7 @@ OBJS = $(SRC:.c=.o)
 
 $(NAME): $(OBJS)
 		@cc $(OBJS) $(PRINTF) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME)
-		@echo "\n\033[0;32mLet's examine this map!\033[0m\n"
+		@echo "\n\033[0;32mLet's make some maps!\033[0m\n"
 
 clean:
 		@rm -f $(OBJS)

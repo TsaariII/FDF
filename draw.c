@@ -6,24 +6,15 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/07 16:17:42 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:13:56 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_map(t_fdf *fdf, t_pixel *dots)
-{
-	copy_dots(fdf->map.dots_array, dots, fdf->map.len);
-	geo_map_shaper(fdf, dots);
-	background(fdf, fdf->map.colour.background);
-	connect_dots(fdf, dots);
-}
-
 void	copy_dots(t_pixel *source, t_pixel *destination, int len)
 {
 	int	i;
-
 	i = 0;
 	while (i < len)
 	{
@@ -97,9 +88,10 @@ void	draw_line(t_fdf *fdf, t_pixel start, t_pixel end)
 	delta.axels[Y] = delta.axels[Y] / step;
 	dot.axels[X] = start.axels[X];
 	dot.axels[Y] = start.axels[Y];
+
 	while (n < step)
 	{
-		place_pixel(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
+		mlx_put_pixel(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
 		dot.axels[X] = dot.axels[X] + delta.axels[X];
 		dot.axels[Y] = dot.axels[Y] + delta.axels[Y];
 		n++;
@@ -117,4 +109,13 @@ void	connect_dots(t_fdf *fdf, t_pixel *dots)
 		set_start_end(&dots[i], fdf, i / fdf->map.dimension.axels[X]);
 		i = i + fdf->map.dimension.axels[X];
 	}
+}
+
+
+void	draw_map(t_fdf *fdf, t_pixel *dots)
+{
+	copy_dots(fdf->map.dots_array, dots, fdf->map.len);
+	geo_map_shaper(fdf, dots);
+	background(fdf, fdf->map.colour.background);
+	connect_dots(fdf, dots);
 }
