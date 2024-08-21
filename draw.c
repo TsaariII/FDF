@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/21 12:55:58 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:07:28 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,6 @@ void	center(t_pixel *dots, t_pixel origo, int len)
 	}
 }
 
-void	geo_map_shaper(t_fdf *fdf, t_pixel *dots)
-{
-	scale_z(dots, &fdf->map);
-	rotate_x(dots, dots, X_ANGLE, fdf->map.len);
-	rotate_y(dots, dots, Y_ANGLE, fdf->map.len);
-	rotate_z(dots, dots, Z_ANGLE, fdf->map.len);
-	scale_dots(dots, fdf->map.scale, fdf->map.len);
-	center(dots, fdf->map.origo, fdf->map.len);
-}
 
 static void x_y_line(t_pixel *dot, t_fdf *fdf, int current)
 {
@@ -87,13 +78,6 @@ void draw_lines(t_fdf *fdf, t_pixel *dots)
 	}
 }
 
-void	draw_map(t_fdf *fdf, t_pixel *dots)
-{
-	copy_dots(fdf->map.dots_array, dots, fdf->map.len);
-	geo_map_shaper(fdf, dots);
-	background(fdf, fdf->map.colour.background);
-	draw_lines(fdf, dots);
-}
 
 void	place_dot(mlx_image_t *image, float x, float y, int32_t colour)
 {
@@ -104,4 +88,22 @@ void	place_dot(mlx_image_t *image, float x, float y, int32_t colour)
 		return ;
 	dot = ((int)round(y) * WIDTH * 4) + ((int)round(x) * 4);
 	base_pixel(&image->pixels[dot], colour, alpha);
+}
+
+void	geo_map_shaper(t_fdf *fdf, t_pixel *dots)
+{
+	scale_z(dots, &fdf->map);
+	rotate_x(dots, dots, X_ANGLE, fdf->map.len);
+	rotate_y(dots, dots, Y_ANGLE, fdf->map.len);
+	rotate_z(dots, dots, Z_ANGLE, fdf->map.len);
+	scale_dots(dots, fdf->map.scale, fdf->map.len);
+	center(dots, fdf->map.origo, fdf->map.len);
+}
+
+void	draw_map(t_fdf *fdf, t_pixel *dots)
+{
+	copy_dots(fdf->map.dots_array, dots, fdf->map.len);
+	geo_map_shaper(fdf, dots);
+	background(fdf, fdf->map.colour.background);
+	draw_lines(fdf, dots);
 }

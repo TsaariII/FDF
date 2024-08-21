@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/21 12:58:11 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:09:29 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ void	line(t_fdf *fdf, t_pixel start, t_pixel end)
 	t_pixel	dot;
 	int		line;
 	int		len;
-
 	if (!valid_dot(&start) && !valid_dot(&end))
 		return ;
 	delta.axels[X] = end.axels[X] - start.axels[X];
@@ -176,5 +175,8 @@ void	line(t_fdf *fdf, t_pixel start, t_pixel end)
 	{
 		dot.colour = gradient(start.colour, end.colour, len, len - line);
 		place_dot(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
+		dot.axels[X] += delta.axels[X];
+		dot.axels[Y] += delta.axels[Y];
+		line -= 1;
 	}
 }
