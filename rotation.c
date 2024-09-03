@@ -6,9 +6,11 @@
 /*   By: nzharkev <nzharkev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:48:04 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/03 14:16:50 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:39:21 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "fdf.h"
 
 void    rotate_x(float *y, float *z, float *angle)
 {

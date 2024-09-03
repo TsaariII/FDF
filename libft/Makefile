@@ -53,7 +53,7 @@ OBJS	= $(SRC:.c=.o)
 
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 
-HEAD	= ./libft.h
+HEAD	= ./libft
 
 AR		= ar rcs
 

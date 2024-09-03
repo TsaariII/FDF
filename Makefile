@@ -21,7 +21,7 @@ LIBFT_DIR = ./libft
 
 PRINTF = $(PRINTF_DIR)/libftprintf.a
 
-PRINTF_DIR = ft_printf
+PRINTF_DIR = ./ft_printf
 
 MLX = ./MLX42
 

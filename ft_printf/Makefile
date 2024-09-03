@@ -9,7 +9,7 @@ SRC		= ft_printf.c\
 		is_str.c\
 		is_unsignbr.c
 
-HEAD	= ./ft_printf.h
+HEAD	= ./ft_printf
 
 CC		= cc
 
