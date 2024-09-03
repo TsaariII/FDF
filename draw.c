@@ -3,107 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nzharkev <nzharkev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/21 17:07:28 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:28:32 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-
-
-void	copy_dots(t_pixel *source, t_pixel *dest, int len)
+static void	put_pixel(t_fdf *fdf, int x, int y, int colour)
 {
-	int	n;
+	char *dot;
 
-	n = 0;
-	while (n < len)
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
-		dest[n] = source[n];
-		n++;
+		dot = fdf->image->pixels + (y * fdf->image->width * 4 + x * 4);
+		*(unsigned int)dot = colour;
 	}
 }
 
-void	center(t_pixel *dots, t_pixel origo, int len)
+static void	draw_line(t_fdf *fdf, t_pixel point0, t_pixel point1)
 {
-	int	n;
-
-	n = 0;
-	while (n < len)
-	{
-		dots[n].axels[X] = dots[n].axels[X] + origo.axels[X];
-		dots[n].axels[Y] = dots[n].axels[Y] + origo.axels[Y];
-		dots[n].axels[Z] = dots[n].axels[Z] + origo.axels[Z];
-		n++;
-	}
-}
-
-
-static void x_y_line(t_pixel *dot, t_fdf *fdf, int current)
-{
+	float step;
+	float x;
+	float y;
 	int i;
-	int e_x;
-	int e_y;
-	int width;
-	int height;
+	t_pixel delta;
 
+	delta.axels[X] = point1.axels[X] - point.axels[X];
+	delta.axels[Y] = point1.axels[Y] - point.axels[Y];
+	if (fabsf(delta.axels[X]) >= fabsf(delta.axels[Y]))
+		step = fabsf(delta.axels[X]);
+	else
+		step = fabsf(delta.axels[Y]);
+	delta.axels[X] /= step;
+	delta.axels[Y] /= step;
 	i = 0;
-	width = (int)round(fdf->map.dimension.axels[X]);
-	height = (int)round(fdf->map.dimension.axels[Y]);
-	while (i < width)
+	while (i < step)
 	{
-		e_x = i + 1;
-		if (e_x >= width)
-			e_x = width + 1;
-		e_y = i + width;
-		line(fdf, dot[i], dot[e_x]);
-		if (current + 1 < height)
-			line(fdf, dot[i], dot[e_y]);
+		put_pixel(fdf, (int)round(x), (int)round(y), point0.colour);
+		x += delta.axels[X];
+		y += delta.axels[Y];
 		i++;
 	}
 }
-
-void draw_lines(t_fdf *fdf, t_pixel *dots)
-{
-	int	i;
-
-	i = 0;
-	fit_it(fdf, dots);
-	while (i < fdf->map.len)
-	{
-		x_y_line(&dots[i],fdf, i / fdf->map.dimension.axels[X]);
-		i = i + fdf->map.dimension.axels[X];
-	}
-}
-
-
-void	place_dot(mlx_image_t *image, float x, float y, int32_t colour)
-{
-	int dot;
-	int alpha;
-	alpha = 0xFF;
-	if (x > WIDTH || y > HEIGHT || x < 0 || y < 0)
-		return ;
-	dot = ((int)round(y) * WIDTH * 4) + ((int)round(x) * 4);
-	base_pixel(&image->pixels[dot], colour, alpha);
-}
-
-void	geo_map_shaper(t_fdf *fdf, t_pixel *dots)
-{
-	scale_z(dots, &fdf->map);
-	rotate_x(dots, dots, X_ANGLE, fdf->map.len);
-	rotate_y(dots, dots, Y_ANGLE, fdf->map.len);
-	rotate_z(dots, dots, Z_ANGLE, fdf->map.len);
-	scale_dots(dots, fdf->map.scale, fdf->map.len);
-	center(dots, fdf->map.origo, fdf->map.len);
-}
-
 void	draw_map(t_fdf *fdf, t_pixel *dots)
 {
-	copy_dots(fdf->map.dots_array, dots, fdf->map.len);
-	geo_map_shaper(fdf, dots);
-	background(fdf, fdf->map.colour.background);
-	draw_lines(fdf, dots);
+	int x;
+	int y;
+	int width;
+	int height;
+	
+	x = 0;
+	y = 0;
+	width = fdf->map.dimensions.axels[X];
+	height = fdf->map.dimensions.axels[Y];
+	while (y < height)
+	{
+		while (x < width)
+		{
+			if (x < width - 1)
+				draw_line(fdf, dots[y * width + x], dots[y * width + (x + 1)]);
+			if (y < height - 1)
+				draw_line(fdf, dots[y * width + x], dots[(y + 1) * width + x]);
+			x++;
+		}
+		y++;
+	}
 }

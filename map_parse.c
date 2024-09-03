@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nzharkev <nzharkev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/21 16:00:27 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/03 14:30:17 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,15 @@ static int	dots_to_map(char *line, t_map *map, int line_num)
 	while (dots[h])
 	{
 		this_dot_is_valid(dots[h], map);
-		//ft_printf("dots[%d]: %s\n", h, dots[h]);
 		map->dots_array[id].axels[X] = h - map->dimension.axels[X] / 2;
 		map->dots_array[id].axels[Y] = line_num - map->dimension.axels[Y] / 2;
 		map->dots_array[id].axels[Z] = ft_atoi(dots[h]);
 		if (ft_strchr(dots[h], ','))
 			map->dots_array[id].colour_hex = paint_hexcolour(dots[h]);
 		calculate_z(map, id);
-		/*printf("dots array[%d][X]: %f\n", h, map->dots_array[h].axels[X]);
-		printf("dots array[%d][Y]: %f\n", h, map->dots_array[h].axels[Y]);
-		printf("dots array[%d][Z]: %f\n", h, map->dots_array[h].axels[Z]);*/
 		h++;
 		id++;
 	}
-	//ft_printf("\n");
 	if (h != map->dimension.axels[X] && line_num != map->dimension.axels[Y])
 		uneven(++id, line_num, map);
 	return (EXIT_SUCCESS);
