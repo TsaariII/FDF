@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 10:55:01 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:46:42 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_fdf
 void	draw_map(t_fdf *fdf, t_pixel *dots);
 
 /*draw_utils.c*/
-void	two_dim(t_fdf *fdf, float angle_x, float angle_y, float angle_z);
+void	two_dim(t_fdf *fdf);
 void	three_dim(t_fdf *fdf);
 
 /*colours.c*/
@@ -115,10 +115,9 @@ void	set_up_fdf(t_fdf *fdf);
 void	map_data(t_map *map, char *file);
 
 /*rotation.c*/
-void    rotate_x(float *y, float *z, float angle);
-void    rotate_x(float *y, float *z, float angle);
-void    rotate_y(float *x, float *z, float angle);
-void    rotate_z(float *x, float *y, float angle);
+void    rotate_x(float *y, float *z);
+void    rotate_y(float *x, float *z);
+void    rotate_z(float *x, float *y);
 void    projection(float *x, float *y, float z);
 
 /*utils.c*/

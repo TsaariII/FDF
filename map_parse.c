@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 13:16:57 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:03:54 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,16 @@ void	map_data(t_map *map, char *file)
 	kick_off_map(map);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error(NULL, "Open error");
+		error(map, "Open error");
 	map->map_info = read_data(map, fd);
 	dimensions(map);
 	map->len = map->dimension.axels[X] * map->dimension.axels[Y];
 	map->dots_array = ft_calloc(map->len, sizeof(t_pixel));
 	if (!map->dots_array)
+	{
+		ft_free_array(map->map_info);
 		error(NULL, "Malloc fail");
+	}
 	dots_on_map(map);
 	dot_colours(map, map->dots_array, map->colour);
 	ft_free_array(map->map_info);

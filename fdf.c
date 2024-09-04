@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 13:27:56 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:00:15 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,21 @@ int	error(t_map *map, char *error_msg)
 {
 	if (map)
 	{
-		ft_free_array(map->map_info);
-		free(map->dots_array);
+		if (map->map_info)
+		{
+			ft_free_array(map->map_info);
+			map->map_info = NULL;
+		}
+		if (map->dots_array)
+		{
+			free(map->dots_array);
+			map->dots_array = NULL;
+		}
 	}
 	ft_printf("%s\n", error_msg);
 	exit (1);
 }
+
 static void	the_hook(void *param)
 {
 	t_fdf	*fdf;
@@ -55,13 +64,7 @@ static void	the_hook(void *param)
 int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
-	float	angle_x;
-	float	angle_y;
-	float	angle_z;
 
-	angle_x = X_ANGLE * M_PI / 180;
-	angle_y = Y_ANGLE * M_PI / 180;
-	angle_z = Z_ANGLE * M_PI / 180;
 	if (argc != 2)
 		error(NULL, "Wrong argc");
 	format_validation(argv[1]);
@@ -70,7 +73,7 @@ int	main(int argc, char **argv)
 		error(NULL, "MLX fail");
 	map_data(&fdf.map, argv[1]);
 	three_dim(&fdf);
-	two_dim(&fdf, angle_x, angle_y, angle_z);
+	two_dim(&fdf);
 	background(&fdf, fdf.map.colour.background);
 	draw_map(&fdf, fdf.map.dots_array);
 	mlx_loop_hook(fdf.mlx, the_hook, &fdf);

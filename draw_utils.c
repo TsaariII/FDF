@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 11:53:19 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:46:32 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ void	three_dim(t_fdf *fdf)
 	int x;
 	int i;
 
-	fdf->map.dots_array = malloc(fdf->map.dimension.axels[Y] * fdf->map.dimension.axels[X] * sizeof(t_pixel));
-	if (!fdf->map.dots_array)
-		error(&fdf->map, "Malloc failed");
 	y = 0;
 	i = 0;
 	while (y < fdf->map.dimension.axels[Y])
@@ -36,12 +33,13 @@ void	three_dim(t_fdf *fdf)
 				.colour = 0
 			};
 			x++;
+			i++;
 		}
 		y++;
 	}
 }
 
-void	two_dim(t_fdf *fdf, float angle_x, float angle_y, float angle_z)
+void	two_dim(t_fdf *fdf)
 {
 	int i;
 	float x;
@@ -54,9 +52,9 @@ void	two_dim(t_fdf *fdf, float angle_x, float angle_y, float angle_z)
 		x = fdf->map.dots_array[i].axels[X];
 		y = fdf->map.dots_array[i].axels[Y];
 		z = fdf->map.dots_array[i].axels[Z];
-		rotate_x(&y, &z, angle_x);
-		rotate_y(&x, &z, angle_y);
-		rotate_z(&x, &y, angle_z);
+		rotate_x(&y, &z);
+		rotate_y(&x, &z);
+		rotate_z(&x, &y);
 		projection(&x, &y, z);
 		fdf->map.dots_array[i].axels[X] = x * fdf->map.scale;
 		fdf->map.dots_array[i].axels[Y] = y * fdf->map.scale;

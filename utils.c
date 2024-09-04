@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 13:03:58 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:00:44 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	error_mlx(t_fdf *fdf)
 {
 	mlx_terminate(fdf->mlx);
-	error(NULL, "MLX error");
+	error(&fdf->map, "MLX error");
 }
 
 void	this_dot_is_valid(char *str, t_map *map)
