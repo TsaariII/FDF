@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/20 15:38:19 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 09:59:16 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,25 @@ static void	the_hook(void *param)
 int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
-	t_pixel	*dots;
+	float	angle_x;
+	float	angle_y;
+	float	angle_z;
 
+	angle_x = X_ANGLE * M_PI / 180;
+	angle_y = Y_ANGLE * M_PI / 180;
+	angle_z = Z_ANGLE * M_PI / 180;
 	if (argc != 2)
 		error(NULL, "Wrong argc");
 	format_validation(argv[1]);
 	set_up_fdf(&fdf);
 	map_data(&fdf.map, argv[1]);
-	dots = ft_calloc(fdf.map.len, sizeof(t_pixel));
-	if (!dots)
-		error(NULL, "Malloc fail");
-	draw_map(&fdf, dots);
-	mlx_loop_hook(fdf.mlx, the_hook, &fdf);
+	three_dim(&fdf);
+	two_dim(&fdf, angle_x, angle_y, angle_z);
+	background(&fdf, fdf.map.colour.background);
+	draw_map(&fdf, fdf.map.dots_array);
 	mlx_loop(fdf.mlx);
+	mlx_loop_hook(fdf.mlx, the_hook, &fdf);
 	free(fdf.map.dots_array);
-	free(dots);
 	mlx_terminate(fdf.mlx);
-	return(1);
+	return(0);
 }

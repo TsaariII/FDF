@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/21 17:06:31 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/08/30 11:53:12 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void	dimensions(t_map *map)
 			error(NULL, "Invalid map");
 		h++;
 	}
-	map->dimension.axels[X] = w;
+	map->dimension.axels[X] = len;
 	map->dimension.axels[Y] = h;
 }

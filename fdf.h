@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/21 12:49:45 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 10:08:31 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,24 +86,13 @@ typedef struct s_fdf
 }	t_fdf;
 
 /*draw.c*/
-void	connect_dots(t_fdf *fdf, t_pixel *dots);
-void	copy_dots(t_pixel *source, t_pixel *destination, int len);
-void	draw_lines(t_fdf *fdf, t_pixel *dots);
 void	draw_map(t_fdf *fdf, t_pixel *dots);
-void	geo_map_shaper(t_fdf *fdf, t_pixel *dots);
-void	place_dot(mlx_image_t *image, float x, float y, int32_t colour);
 
 /*draw_utils.c*/
-t_pixel	multiply_matrix(float matrix[3][3], t_pixel dot);
-void	scale_z(t_pixel *dots, t_map *map);
-void	rotate_x(t_pixel *dots, t_pixel *projection, float angle, int len);
-void	rotate_y(t_pixel *dots, t_pixel *projection, float angle, int len);
-void	rotate_z(t_pixel *dots, t_pixel *projection, float angle, int len);
-void	line(t_fdf *fdf, t_pixel start, t_pixel end);
-void	scale_dots(t_pixel *array, float scale, int len);
-void	center(t_pixel *dots, t_pixel origo, int len);
+void	two_dim(t_fdf *fdf, float angle_x, float angle_y, float angle_z);
+void	three_dim(t_fdf *fdf);
 
-/*colour.c*/
+/*colours.c*/
 int32_t	gradient(int colour_s, int colour_e, int len, int dot);
 void	dot_colours(t_map *map, t_pixel *dots, t_colours colours);
 void	background(t_fdf *fdf, __int32_t background);
@@ -124,12 +113,18 @@ void	set_up_fdf(t_fdf *fdf);
 /*map_parse.c*/
 void	map_data(t_map *map, char *file);
 
+/*rotation.c*/
+void    rotate_x(float *y, float *z, float angle);
+void    rotate_y(float *x, float *z, float angle);
+void    rotate_z(float *x, float *y, float angle);
+void    projection(float *x, float *y, float *z);
+
 /*utils.c*/
 void	error_mlx(t_fdf *fdf);
-void	fit_it(t_fdf *fdf, t_pixel *dots);
+//void	fit_it(t_fdf *fdf, t_pixel *dots);
 void	uneven(int x, int line_num, t_map *map);
 void	calculate_z(t_map *map, int id);
 void	this_dot_is_valid(char *str, t_map *map);
-bool	valid_dot(t_pixel *dot);
+//bool	valid_dot(t_pixel *dot);
 
 #endif
