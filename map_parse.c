@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 14:03:54 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:59:11 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	map_data(t_map *map, char *file)
 	}
 	dots_on_map(map);
 	dot_colours(map, map->dots_array, map->colour);
-	ft_free_array(map->map_info);
+	//ft_free_array(map->map_info);
 	map->map_info = NULL;
 	close(fd);
 }

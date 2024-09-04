@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 13:46:32 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:06:48 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	three_dim(t_fdf *fdf)
 	while (y < fdf->map.dimension.axels[Y])
 	{
 		x = 0;
-		printf("map info %d: %s\n", y, fdf->map.map_info[y]);
 		while (x < fdf->map.dimension.axels[X])
 		{
 			fdf->map.dots_array[i] = (t_pixel)
