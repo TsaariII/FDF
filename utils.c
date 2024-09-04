@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 10:04:50 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:05:43 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ void	uneven(int x, int line_num, t_map *map)
 	map->dots_array[x].axels[Z] = 0;
 	map->dots_array[x].axels[X] = map->dimension.axels[X];
 	map->dots_array[x].axels[Y] = line_num - map->dimension.axels[Y] / 2;
+}
+
+int	ft_array_len(char **str)
+{
+	int len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 /*static bool	inside_window(t_pixel *dots, int len)
 {

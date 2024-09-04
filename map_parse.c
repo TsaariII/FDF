@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nzharkev <nzharkev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/30 12:06:05 by nzharkev         ###   ########.fr       */
-=======
-/*   Updated: 2024/09/03 14:30:17 by nzharkev         ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
+/*   Updated: 2024/09/04 11:08:31 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "fdf.h"
 
@@ -42,6 +39,7 @@ static char	**read_data(t_map *map, int fd)
 		line = get_next_line(fd);
 	}
 	split_result = ft_split(data, '\n');
+	free(data);
 	return (split_result);
 }
 
@@ -106,7 +104,7 @@ void	map_data(t_map *map, char *file)
 		error(NULL, "Malloc fail");
 	dots_on_map(map);
 	dot_colours(map, map->dots_array, map->colour);
-	//free(map->map_info);
+	ft_free_array(map->map_info);
 	map->map_info = NULL;
 	close(fd);
 }

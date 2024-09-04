@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/30 11:53:12 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 11:05:04 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,27 @@ void	kick_off_map(t_map *map)
 
 void	dimensions(t_map *map)
 {
-	int	w;
-	int	h;
-	int	j;
-	int len;
+	int		w;
+	int		h;
+	int 	len;
+	char	**first;
+	char 	**current;
 
 	w = 0;
 	h = 0;
-	len = ft_countchar(map->map_info[0], ' ') + 1;
+	first = ft_split(map->map_info[0], ' ');
+	len = ft_array_len(first);
+	printf("len: %d\n", len);
+	free(first);
 	while (map->map_info[h])
 	{
-		w = 0;
-		j = 0;
-		while (j <= (int)ft_strlen(map->map_info[h]))
-		{
-			if (ft_isdigit(map->map_info[h][j]))
-				w++;
-			j++;
-		}
+		current = ft_split(map->map_info[h], ' ');
+		w = ft_array_len(current);
 		if (w != len)
-			error(NULL, "Invalid map");
+		{
+			printf("here\n");
+			error(map, "Inconsistent row length");
+		}
 		h++;
 	}
 	map->dimension.axels[X] = len;
