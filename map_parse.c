@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 11:08:31 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:16:57 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static int	dots_to_map(char *line, t_map *map, int line_num)
 	h = 0;
 	id = line_num * map->dimension.axels[X];
 	dots = ft_split(line, ' ');
+	if (!dots)
+		error(map, "Malloc fail");
 	while (dots[h])
 	{
 		this_dot_is_valid(dots[h], map);
@@ -65,6 +67,7 @@ static int	dots_to_map(char *line, t_map *map, int line_num)
 		h++;
 		id++;
 	}
+	ft_free_array(dots);
 	if (h != map->dimension.axels[X] && line_num != map->dimension.axels[Y])
 		uneven(++id, line_num, map);
 	return (EXIT_SUCCESS);

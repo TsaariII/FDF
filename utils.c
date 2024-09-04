@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 11:05:43 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:03:58 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_array_len(char **str)
 		len++;
 	return (len);
 }
+
 /*static bool	inside_window(t_pixel *dots, int len)
 {
 	int a;

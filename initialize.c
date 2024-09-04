@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 11:05:04 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:05:34 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,17 @@ void	dimensions(t_map *map)
 	w = 0;
 	h = 0;
 	first = ft_split(map->map_info[0], ' ');
+	if (!first)
+		error(map, "Malloc fail");
 	len = ft_array_len(first);
-	printf("len: %d\n", len);
-	free(first);
+	ft_free_array(first);
 	while (map->map_info[h])
 	{
 		current = ft_split(map->map_info[h], ' ');
 		w = ft_array_len(current);
+		ft_free_array(current);
 		if (w != len)
-		{
-			printf("here\n");
 			error(map, "Inconsistent row length");
-		}
 		h++;
 	}
 	map->dimension.axels[X] = len;

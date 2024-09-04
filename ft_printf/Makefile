@@ -13,7 +13,7 @@ HEAD	= ./ft_printf
 
 CC		= cc
 
-FLAGS	= -Wall -Werror -Wextra
+FLAGS	= -Wall -Werror -Wextra -g
 
 AR		= ar rcs
 

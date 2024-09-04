@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 10:21:18 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:27:56 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	error(t_map *map, char *error_msg)
 {
 	if (map)
 	{
-		free(map->map_info);
+		ft_free_array(map->map_info);
 		free(map->dots_array);
 	}
 	ft_printf("%s\n", error_msg);
@@ -66,13 +66,17 @@ int	main(int argc, char **argv)
 		error(NULL, "Wrong argc");
 	format_validation(argv[1]);
 	set_up_fdf(&fdf);
+	if (!fdf.mlx)
+		error(NULL, "MLX fail");
 	map_data(&fdf.map, argv[1]);
 	three_dim(&fdf);
 	two_dim(&fdf, angle_x, angle_y, angle_z);
 	background(&fdf, fdf.map.colour.background);
 	draw_map(&fdf, fdf.map.dots_array);
-	mlx_loop(fdf.mlx);
 	mlx_loop_hook(fdf.mlx, the_hook, &fdf);
+	mlx_loop(fdf.mlx);
+	if (fdf.image)
+		mlx_delete_image(fdf.mlx, fdf.image);
 	free(fdf.map.dots_array);
 	mlx_terminate(fdf.mlx);
 	return(0);
