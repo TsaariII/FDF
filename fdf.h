@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nzharkev <nzharkev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/04 10:08:31 by nzharkev         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/03 14:31:28 by nzharkev         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +93,11 @@ typedef struct s_fdf
 void	draw_map(t_fdf *fdf, t_pixel *dots);
 
 /*draw_utils.c*/
+<<<<<<< HEAD
 void	two_dim(t_fdf *fdf, float angle_x, float angle_y, float angle_z);
+=======
+void	two_dim(t_fdf *fdf);
+>>>>>>> refs/remotes/origin/main
 void	three_dim(t_fdf *fdf);
 
 /*colours.c*/
@@ -114,7 +122,11 @@ void	set_up_fdf(t_fdf *fdf);
 void	map_data(t_map *map, char *file);
 
 /*rotation.c*/
+<<<<<<< HEAD
 void    rotate_x(float *y, float *z, float angle);
+=======
+void    rotate_x(float *y, float *z, float *angle);
+>>>>>>> refs/remotes/origin/main
 void    rotate_y(float *x, float *z, float angle);
 void    rotate_z(float *x, float *y, float angle);
 void    projection(float *x, float *y, float *z);

@@ -6,6 +6,7 @@ SRC =	fdf.c\
 		initialize.c\
 		map_parse.c\
 		colours.c\
+		rotation.c\
 		utils.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c

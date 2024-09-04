@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nzharkev <nzharkev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/08/30 12:06:05 by nzharkev         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/03 14:30:17 by nzharkev         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
