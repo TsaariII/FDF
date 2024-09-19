@@ -6,60 +6,68 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:48:04 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 13:37:52 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:26:51 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "fdf.h"
 
-void    rotate_x(float *y, float *z)
+// static void center(t_fdf *fdf, t_dot origo, int len)
+// {
+// 	int i;
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		fdf->map.dots_array[i].axels[X] = fdf->map.dots_array[i].axels[X] + origo.axels[X];
+// 		fdf->map.dots_array[i].axels[Y] = fdf->map.dots_array[i].axels[Y] + origo.axels[Y];
+// 		fdf->map.dots_array[i].axels[Z] = fdf->map.dots_array[i].axels[Z] + origo.axels[Z];
+// 		i++;
+// 	}
+// }
+
+void rotate_and_project(t_fdf *fdf)
 {
-    float temp_y;
-    float temp_z;
-    float angle;
+	int	i;
+	double angle;
+	double axis_angle;
+	float x, y, z;
 
-    temp_y = *y;
-    temp_z = *z;
-    angle = X_ANGLE * M_PI / 180;
-
-   *y = temp_y * cosf(angle) - temp_z * sinf(angle);
-   *z = temp_y * sinf(angle) + temp_z * cosf(angle);
+	i = 0;
+	angle = 30 * (M_PI / 180);
+	axis_angle = 120 * (M_PI / 180);
+	while (i < fdf->map.len)
+	{
+		x = fdf->map.dots_array[i].axels[X];
+		y = fdf->map.dots_array[i].axels[Y];
+		z = fdf->map.dots_array[i].axels[Z];
+		fdf->map.dots_array[i].axels[X] = (x * cos(angle)) + (y * cos(angle + axis_angle))
+		 	+ (z * cos(angle - axis_angle));
+		fdf->map.dots_array[i].axels[Y] = (x * sin(angle)) + (y * sin(angle + axis_angle))
+		 	+ (z * sin(angle - axis_angle));
+		i++;
+	}
+	positive(&fdf->map);
+	fit_it(&fdf->map);
+	//center(fdf, fdf->map.origo, fdf->map.len);
 }
 
-void    rotate_y(float *x, float *z)
+void positive(t_map *map)
 {
-    float temp_x;
-    float temp_z;
-    float angle;
+ 	t_dot min;
+ 	t_dot max;
+	float shift_x;
+	float shift_y;
+	int i;
 
-    temp_x = *x;
-    temp_z = *z;
-    angle = Y_ANGLE * M_PI / 180;
-    *x = temp_x * cosf(angle) + temp_z * sinf(angle);
-    *z = -temp_x * sinf(angle) + temp_z * cosf(angle);
-}
-
-void    rotate_z(float *x, float *y)
-{
-    float temp_x;
-    float temp_y;
-    float angle;
-
-    temp_x = *x;
-    temp_y = *y;
-    angle = Z_ANGLE * M_PI / 180;
-    *x = temp_x * cosf(angle) - temp_y * sinf(angle);
-    *y = temp_x * sinf(angle) + temp_y * cosf(angle);
-}
-
-void    projection(float *x, float *y, float z)
-{
-    float temp_x;
-    float temp_y;
-
-    temp_x = *x;
-    temp_y = *y;
-    *x = (temp_x - temp_y) * cosf(30 * M_PI / 180);
-    *y = (temp_x + temp_y) * sinf(30 * M_PI / 180) - z;
+	get_min(map, &min);
+	get_max(map, &max);
+	shift_x = -min.axels[X];
+	shift_y = -min.axels[Y];
+	i = 0;
+	while (i < map->len)
+	{
+		map->dots_array[i].axels[X] += shift_x;
+		map->dots_array[i].axels[Y] += shift_y;
+		i++;
+	}
 }

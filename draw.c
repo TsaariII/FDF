@@ -6,56 +6,52 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/04 10:28:20 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:25:49 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	put_pixel(t_fdf *fdf, int x, int y, int colour)
+static void place_dot(mlx_image_t *image, float x, float y, int32_t colour)
 {
-	char *dot;
-
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-	{
-		dot = (char *)fdf->image->pixels + (y * fdf->image->width * 4 + x * 4);
-		*(unsigned int *)dot = colour;
-		dot = (char *)fdf->image->pixels + (y * fdf->image->width * 4 + x * 4);
-		*(unsigned int *)dot = colour;
-	}
+	int dot;
+	int alpha;
+	alpha = 0xFF;
+	if (x > WIDTH || y > HEIGHT || x < 0 || y < 0)
+		return ;
+	dot = ((int)round(y) * WIDTH * 4) + ((int)round(x) * 4);
+	base_pixel(&image->pixels[dot], colour, alpha);
 }
 
-static void	draw_line(t_fdf *fdf, t_pixel point0, t_pixel point1)
+static void	draw_line(t_fdf *fdf, t_dot point0, t_dot point1)
 {
-	float step;
-	float x;
-	float y;
-	int i;
-	t_pixel delta;
+	t_dot delta;
+	t_dot dot;
+	int line;
+	int len;
 
 	delta.axels[X] = point1.axels[X] - point0.axels[X];
 	delta.axels[Y] = point1.axels[Y] - point0.axels[Y];
-	delta.axels[X] = point1.axels[X] - point0.axels[X];
-	delta.axels[Y] = point1.axels[Y] - point0.axels[Y];
-	if (fabsf(delta.axels[X]) >= fabsf(delta.axels[Y]))
-		step = fabsf(delta.axels[X]);
-	else
-		step = fabsf(delta.axels[Y]);
-	delta.axels[X] /= step;
-	delta.axels[Y] /= step;
-	x = point0.axels[X];
-	y = point0.axels[Y];
-	i = 0;
-	while (i < step)
+	line = sqrt((delta.axels[X] * delta.axels[X]) + (delta.axels[Y] * delta.axels[Y]));
+	len = line;
+	delta.axels[X] /= line;
+	delta.axels[Y] /= line;
+	dot.axels[X] = point0.axels[X];
+	dot.axels[Y] = point0.axels[Y];
+	while (line > 0)
 	{
-		put_pixel(fdf, (int)round(x), (int)round(y), point0.colour);
-		x += delta.axels[X];
-		y += delta.axels[Y];
-		i++;
+		if (point0.axels[Z] == point1.axels[Z])
+			dot.colour = point0.colour;
+		else
+			dot.colour = gradient(point0.colour, point1.colour, len, len - line);
+		place_dot(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
+		dot.axels[X] += delta.axels[X];
+		dot.axels[Y] += delta.axels[Y];
+		line -= 1;
 	}
 }
 
-void	draw_map(t_fdf *fdf, t_pixel *dots)
+void	draw_map(t_fdf *fdf, t_dot *dots)
 {
 	int x;
 	int y;
@@ -66,13 +62,9 @@ void	draw_map(t_fdf *fdf, t_pixel *dots)
 	y = 0;
 	width = fdf->map.dimension.axels[X];
 	height = fdf->map.dimension.axels[Y];
-
-	x = 0;
-	y = 0;
-	width = fdf->map.dimension.axels[X];
-	height = fdf->map.dimension.axels[Y];
 	while (y < height)
 	{
+		x = 0;
 		while (x < width)
 		{
 			if (x < width - 1)
