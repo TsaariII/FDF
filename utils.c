@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:27:10 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:13:53 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ int	error(t_map *map, char *error_msg)
 	exit (1);
 }
 
-void	copy_dots(t_dot *src, t_dot *dest, int len)
-{
-	int i;
+// void	copy_dots(t_dot *src, t_dot *dest, int len)
+// {
+// 	int i;
 
-	i = 0;
-	while (i < len)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		dest[i] = src[i];
+// 		i++;
+// 	}
+// }
 void	uneven(int x, int line_num, t_map *map)
 {
 	map->dots_array[x].axels[Z] = 0;
@@ -66,7 +66,7 @@ void	this_dot_is_valid(char *str, t_map *map)
 			if (*str >= 'g' && *str <= 'z' && *str !='x')
 				error(map, "Invalid map");
 		}
-		else
+		else if (*str != 10)
 			error(map, "Invalid map");
 		str++;
 	}

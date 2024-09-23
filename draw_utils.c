@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:25:18 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:07:01 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_zoom(t_map *map, double zoom)
 	{
 		map->dots_array[i].axels[X] *= zoom;
 		map->dots_array[i].axels[Y] *= zoom;
-		map->dots_array[i].axels[Z] *= zoom;
+		//map->dots_array[i].axels[Z] *= zoom;
 		i++;
 	}
 }

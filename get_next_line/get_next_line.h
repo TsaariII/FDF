@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:56:00 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/07 09:32:14 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:51:32 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2
+#  define BUFFER_SIZE 100
 # endif
 
 # include <unistd.h>

@@ -6,41 +6,11 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:26:30 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:14:27 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static char	**read_data(t_map *map, int fd)
-{
-	char	*line;
-	char	*data;
-	char	*temp;
-	char	**split_res;
-
-	data = ft_calloc(1, sizeof(char));
-	if (!data)
-		error(map, "Malloc fail");
-	line = get_next_line(fd);
-	while (line)
-	{
-		temp = data;
-		data = ft_strjoin(data, line);
-		if (!data)
-		{
-			free(line);
-			free(temp);
-			error(map, "Malloc fail");
-		}
-		free(temp);
-		free(line);
-		line = get_next_line(fd);
-	}
-	split_res = ft_split(data, '\n');
-	free(data);
-	return (split_res);
-}
 
 static int	coordinates(char *line, t_map *map, int line_num)
 {
@@ -56,6 +26,8 @@ static int	coordinates(char *line, t_map *map, int line_num)
 	while (dots[h])
 	{
 		this_dot_is_valid(dots[h], map);
+		if (ft_strchr(dots[h], ','))
+			map->dots_array[id].colour_hex = paint_hexcolour(dots[h]);
 		map->dots_array[id].axels[X] = h - (map->dimension.axels[X] - 1) / 2.0;
 		map->dots_array[id].axels[Y] = line_num - (map->dimension.axels[Y] / 2.0);
 		map->dots_array[id].axels[Z] = ft_atoi(dots[h]);
@@ -75,6 +47,12 @@ static void	create_coordinates(t_map *map)
 
 	i = 0;
 	temp = map->map_info;
+	// map->dots_array = ft_calloc(map->len, sizeof(t_dot));
+	// if (!map->dots_array)
+	// {
+	// 	ft_free_array(map->map_info);
+	// 	error(NULL, "Malloc fail");
+	// }
 	if (map->map_info[i] == NULL)
 		error(NULL, "Invalid map");
 	i = 0;
@@ -86,6 +64,45 @@ static void	create_coordinates(t_map *map)
 	z_values(map);
 }
 
+// static int if_empty(int fd, char *line)
+// {
+// 	line = get_next_line(fd);
+// 	if (!line)
+// 		return (0);
+// 	return (1);
+// }
+
+void read_data(t_map *map, int fd)
+{
+	char *line;
+	int i;
+	char **temp;
+
+	line = NULL;
+	map->map_info = malloc(1 * sizeof(char *));
+	// if (!if_empty(fd, line))
+	// 	error(map, "Empty file");
+	line = get_next_line(fd);
+	map->map_info[0] = line;
+	i = 1;
+	while (line)
+	{
+		temp = map->map_info;
+		line = get_next_line(fd);
+		temp = ft_realloc(map->map_info, i * sizeof(char *), (i + 1) * sizeof(char *));
+		if (!temp)
+		{
+			free(line);
+			line = NULL;
+			error(map, "Malloc fail");
+		}
+		map->map_info = temp;
+		map->map_info[i] = line;
+		if (line)
+			i++;
+	}
+}
+
 void	map_data(t_fdf *fdf, char *file)
 {
 	int fd;
@@ -94,7 +111,7 @@ void	map_data(t_fdf *fdf, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		error(&fdf->map, "Open error");
-	fdf->map.map_info = read_data(&fdf->map, fd);
+	read_data(&fdf->map, fd);
 	dimensions(&fdf->map);
 	fdf->map.len = fdf->map.dimension.axels[X] * fdf->map.dimension.axels[Y];
 	fdf->map.dots_array = ft_calloc(fdf->map.len, sizeof(t_dot));
@@ -110,3 +127,34 @@ void	map_data(t_fdf *fdf, char *file)
 	fdf->map.map_info = NULL;
 	close(fd);
 }
+
+//fdf->map.map_info = read_data(&fdf->map, fd);
+// static char **read_data(t_map *map, int fd)
+// {
+// 	char	*line;
+// 	char	*data;
+// 	char	*temp;
+// 	char	**split_res;
+
+// 	data = ft_calloc(1, sizeof(char));
+// 	if (!data)
+// 		error(map, "Malloc fail");
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		temp = data;
+// 		data = ft_strjoin(data, line);
+// 		if (!data)
+// 		{
+// 			free(line);
+// 			free(temp);
+// 			error(map, "Malloc fail");
+// 		}
+// 		free(temp);
+// 		free(line);
+// 		line = get_next_line(fd);
+// 	}
+// 	split_res = ft_split(data, '\n');
+// 	free(data);
+// 	return (split_res);
+// }

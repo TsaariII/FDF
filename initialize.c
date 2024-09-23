@@ -6,11 +6,19 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:26:13 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:50:26 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	base_colours(t_map *map)
+{
+	map->colour.background = BIANCHI;
+	map->colour.top = BLACK;
+	map->colour.bottom = YELLOW;
+	map->colour.base = WHITE;
+}
 
 void	set_up_fdf(t_fdf *fdf)
 {
@@ -52,7 +60,7 @@ void	dimensions(t_map *map)
 	w = 0;
 	first = ft_split(map->map_info[0], ' ');
 	if (!first)
-		error(map, "Malloc fail");
+		error(map, "Malloc fail 1");
 	len = ft_array_len(first);
 	ft_free_array(first);
 	while (map->map_info[h])
@@ -68,13 +76,6 @@ void	dimensions(t_map *map)
 	map->dimension.axels[Y] = h;
 }
 
-void	base_colours(t_map *map)
-{
-	map->colour.background = BLACK;
-	map->colour.top = WHITE;
-	map->colour.bottom = YELLOW;
-	map->colour.base = BIANCHI;
-}
 
 void	base_pixel(uint8_t *buffer, int colour, int alpha)
 {

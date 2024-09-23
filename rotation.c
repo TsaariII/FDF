@@ -6,24 +6,32 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:48:04 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:26:51 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:17:47 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// static void center(t_fdf *fdf, t_dot origo, int len)
-// {
-// 	int i;
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		fdf->map.dots_array[i].axels[X] = fdf->map.dots_array[i].axels[X] + origo.axels[X];
-// 		fdf->map.dots_array[i].axels[Y] = fdf->map.dots_array[i].axels[Y] + origo.axels[Y];
-// 		fdf->map.dots_array[i].axels[Z] = fdf->map.dots_array[i].axels[Z] + origo.axels[Z];
-// 		i++;
-// 	}
-// }
+static void center(t_map *map, int len)
+{
+	t_dot min;
+	t_dot max;
+	t_dot shift;
+	int i;
+
+	get_min(map, &min);
+	get_max(map, &max);
+	shift.axels[X] = (WIDTH / 2) - ((max.axels[X] + min.axels[X]) / 2);
+	shift.axels[Y] = (HEIGHT / 2) - ((max.axels[Y] + min.axels[Y]) / 2);
+	shift.axels[Z] = 0;
+	i = 0;
+	while (i < len)
+	{
+		map->dots_array[i].axels[X] += shift.axels[X];
+		map->dots_array[i].axels[Y] += shift.axels[Y];
+		i++;
+	}
+}
 
 void rotate_and_project(t_fdf *fdf)
 {
@@ -34,7 +42,7 @@ void rotate_and_project(t_fdf *fdf)
 
 	i = 0;
 	angle = 30 * (M_PI / 180);
-	axis_angle = 120 * (M_PI / 180);
+	axis_angle = 110 * (M_PI / 180);
 	while (i < fdf->map.len)
 	{
 		x = fdf->map.dots_array[i].axels[X];
@@ -48,7 +56,7 @@ void rotate_and_project(t_fdf *fdf)
 	}
 	positive(&fdf->map);
 	fit_it(&fdf->map);
-	//center(fdf, fdf->map.origo, fdf->map.len);
+	center(&fdf->map, fdf->map.len);
 }
 
 void positive(t_map *map)

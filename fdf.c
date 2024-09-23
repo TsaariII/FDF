@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:22:54 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:56:03 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,4 @@ int	main(int argc, char **argv)
 	mlx_terminate(fdf.mlx);
 	return (0);
 }
+

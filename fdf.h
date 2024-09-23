@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/19 15:27:46 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:40:25 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_fdf
 	mlx_image_t	*image;
 }	t_fdf;
 
+/*fdf.c*/
 int	ft_array_len(char **str);
 int	little_big_endian(void);
 
@@ -94,35 +95,34 @@ int32_t	gradient(int colour_s, int colour_e, int len, int dot);
 void	background(t_fdf *fdf, __int32_t background);
 int32_t	paint_hexcolour(char *str);
 
-/*dots.c*/
-void	to_isometric(t_fdf *fdf);
-void	fit_it(t_map *map);
-void	get_min(t_map *map, t_dot *min);
-void	get_max(t_map *map, t_dot *max);
-
 /*draw.c*/
 void	draw_map(t_fdf *fdf, t_dot *dots);
 
-/*rotate.c*/
+/*draw_utils.c*/
+void	get_min(t_map *map, t_dot *min);
+void	get_max(t_map *map, t_dot *max);
+void	fit_it(t_map *map);
+
+/*rotation.c*/
 void rotate_and_project(t_fdf *fdf);
 void positive(t_map *map);
 
-/*initilation.c*/
+/*initilalize.c*/
+void	base_pixel(uint8_t *buffer, int colour, int alpha);
 void	dimensions(t_map *map);
 void	kick_off_map(t_map *map);
 void	set_up_fdf(t_fdf *fdf);
+void	z_values(t_map *map);
 
 /*map_data.c*/
 void	map_data(t_fdf *fdf, char *file);
+void 	read_data(t_map *map, int fd);
 
 /*utils.c*/
 void	base_colours(t_map *map);
-void	base_pixel(uint8_t *buffer, int colour, int alpha);
-void	copy_dots(t_dot *src, t_dot *dest, int len);
 int		error(t_map *map, char *error_msg);
 void	error_mlx(t_fdf *fdf);
 void	this_dot_is_valid(char *str, t_map *map);
 void	uneven(int x, int line_num, t_map *map);
-void	z_values(t_map *map);
 
 #endif
