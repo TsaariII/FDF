@@ -1,8 +1,10 @@
 NAME := fdf
 
 SRC =	fdf.c\
+		clip.c\
 		draw.c\
 		draw_utils.c\
+		hooks.c\
 		initialize.c\
 		map_parse.c\
 		colours.c\
@@ -76,3 +78,11 @@ fclean:
 re: fclean all
 
 .PHONY: all clean fclean re libmlx libft
+
+		# @if [ ! -d "$(MLX)" ]; then \
+		# 	git clone https://github.com/codam-coding-college/MLX42.git $(MLX); \
+		# fi
+		# @if [ ! -d "$(MLX)/build" ]; then \
+		# 	cmake $(MLX) -B $(MLX)/build; \
+		# fi
+		# @make -C $(MLX)/build -j4

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:17:48 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/20 15:10:19 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:06:02 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,14 @@ int32_t	paint_hexcolour(char *str)
 		str++;
 	colour = ft_atoi_base(str + 3, 16);
 	return (colour);
+}
+
+int	little_big_endian(void)
+{
+	int	endian;
+	int16_t	x;
+
+	x = 0x0001;
+	endian = (*((int8_t *)(&x)) == 0x01);
+	return (endian);
 }

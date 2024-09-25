@@ -6,13 +6,13 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:48:04 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/20 14:17:47 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:17:12 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void center(t_map *map, int len)
+void center(t_map *map, int len)
 {
 	t_dot min;
 	t_dot max;
@@ -55,8 +55,8 @@ void rotate_and_project(t_fdf *fdf)
 		i++;
 	}
 	positive(&fdf->map);
-	fit_it(&fdf->map);
-	center(&fdf->map, fdf->map.len);
+	//fit_it(&fdf->map);
+	//center(&fdf->map, fdf->map.len);
 }
 
 void positive(t_map *map)

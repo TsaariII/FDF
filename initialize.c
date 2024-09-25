@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/23 13:50:26 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:52:53 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	kick_off_map(t_map *map)
 	map->dimension.axels[Y] = 0;
 	map->dimension.axels[Z] = 0;
 	map->len = 0;
-	map->scale = 50;
+	map->scale_xy = 1;
+	map->scale_z = 1;
 	map->min_z = 0;
 	map->origo.axels[X] = WIDTH / 2;
 	map->origo.axels[Y] = HEIGHT / 2;
@@ -92,24 +93,5 @@ void	base_pixel(uint8_t *buffer, int colour, int alpha)
 		buffer[GREEN] = colour >> 8;
 		buffer[BLUE] = colour;
 		buffer[ALPHA] =	alpha;
-	}
-}
-
-void z_values(t_map *map)
-{
-	int i;
-	i = 0;
-	while (i < map->len)
-	{
-		if (map->dots_array[i].axels[Z] < map->min_z)
-			map->min_z = map->dots_array[i].axels[Z];
-		i++;
-	}
-	i = 0;
-	while (i < map->len)
-	{
-		if (map->dots_array[i].axels[Z] > map->dimension.axels[Z])
-			map->dimension.axels[Z] = map->dots_array[i].axels[Z];
-		i++;
 	}
 }

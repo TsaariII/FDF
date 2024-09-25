@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/20 13:07:01 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:52:43 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,20 @@ void	get_max(t_map *map, t_dot *max)
 	}
 }
 
-static void	ft_zoom(t_map *map, double zoom)
+void	ft_zoom(t_map *map, double zoom_xy, double zoom_z)
 {
 	int i;
 
 	i = 0;
 	while (i < map->len)
 	{
-		map->dots_array[i].axels[X] *= zoom;
-		map->dots_array[i].axels[Y] *= zoom;
-		//map->dots_array[i].axels[Z] *= zoom;
+		if (zoom_xy)
+		{
+			map->dots_array[i].axels[X] *= zoom_xy;
+			map->dots_array[i].axels[Y] *= zoom_xy;
+		}
+		if (zoom_z)
+			map->dots_array[i].axels[Z] *= zoom_z;
 		i++;
 	}
 }
@@ -71,7 +75,41 @@ void	fit_it(t_map *map)
 	get_max(map, &max);
 	zoom_x = fabs(max.axels[X] - min.axels[X]) / (WIDTH - (MARGIN * 2));
 	zoom_y = fabs(max.axels[Y] - min.axels[Y]) / (HEIGHT - (MARGIN * 2));
+	zoom_x *= map->scale_xy;
+	zoom_y *= map->scale_xy;
 	if (zoom_y <= 0 || zoom_x <= 0)
 		return ;
-	ft_zoom(map, fmin(1 / zoom_y, 1 / zoom_x));
+	ft_zoom(map, fmin(1 / zoom_y, 1 / zoom_x), map->scale_z);
 }
+
+void z_values(t_map *map)
+{
+	int i;
+	i = 0;
+	while (i < map->len)
+	{
+		if (map->dots_array[i].axels[Z] < map->min_z)
+			map->min_z = map->dots_array[i].axels[Z];
+		i++;
+	}
+	i = 0;
+	while (i < map->len)
+	{
+		if (map->dots_array[i].axels[Z] > map->dimension.axels[Z])
+			map->dimension.axels[Z] = map->dots_array[i].axels[Z];
+		i++;
+	}
+}
+
+// static void	ft_zoom(t_map *map, double zoom)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (i < map->len)
+// 	{
+// 		map->dots_array[i].axels[X] *= zoom;
+// 		map->dots_array[i].axels[Y] *= zoom;
+// 		i++;
+// 	}
+// }
