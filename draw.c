@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/25 16:21:20 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:38:01 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ static int compute_outcode(mlx_image_t *img, t_dot *dot)
 	code = INSIDE;
 	if (dot->axels[X] < 1)
 		code |= LEFT;
-	if (dot->axels[X] > (int)(img->width - 1))
+	if (dot->axels[X] > (img->width - 1))
 		code |= RIGHT;
 	if (dot->axels[Y] < 1)
 		code |= TOP;
-	if (dot->axels[Y] > (int)(img->height - 1))
+	if (dot->axels[Y] > (img->height - 1))
 		code |= BOTTOM;
 	return (code);
 }
 
-static void	update_xy(mlx_image_t *img, int *xy, int *out, t_dot *dot)
+static void	update_xy(mlx_image_t *img, float *xy, int *out, t_dot *dot)
 {
 	dot->axels[X] = xy[0];
 	dot->axels[Y] = xy[1];
@@ -38,7 +38,7 @@ static void	update_xy(mlx_image_t *img, int *xy, int *out, t_dot *dot)
 static int jack_bauer(mlx_image_t *img, int out[2], t_dot *s, t_dot *e)
 {
 	int update;
-	int xy[2];
+	float xy[2];
 
 	while ((out[0] | out[1]))
 	{
@@ -68,6 +68,7 @@ int clip_line(mlx_image_t *img, t_dot *s, t_dot *e)
 {
 	int out[2];
 	int res;
+
 	out[0] = compute_outcode(img, s);
 	out[1] = compute_outcode(img, e);
 	res = jack_bauer(img, out, s, e);
@@ -92,6 +93,8 @@ static void	draw_line(t_fdf *fdf, t_dot point0, t_dot point1)
 	int line;
 	int len;
 
+	if (!clip_line(fdf->image, &point0, &point1))
+		return ;
 	delta.axels[X] = point1.axels[X] - point0.axels[X];
 	delta.axels[Y] = point1.axels[Y] - point0.axels[Y];
 	line = sqrt((delta.axels[X] * delta.axels[X]) + (delta.axels[Y] * delta.axels[Y]));
@@ -102,12 +105,11 @@ static void	draw_line(t_fdf *fdf, t_dot point0, t_dot point1)
 	dot.axels[Y] = point0.axels[Y];
 	while (line > 0)
 	{
-		if (!clip_line(fdf->image, &point0, &point1))
-			break ;
 		if (point0.axels[Z] == point1.axels[Z])
 			dot.colour = point0.colour;
 		else
 			dot.colour = gradient(point0.colour, point1.colour, len, len - line);
+		//if ((dot.axels[X] > 0 && dot.axels[X] < fdf->image->width) && (dot.axels[Y] > 0 && dot.axels[Y] < fdf->image->height))
 		place_dot(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
 		dot.axels[X] += delta.axels[X];
 		dot.axels[Y] += delta.axels[Y];

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/25 16:17:46 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:30:33 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ typedef struct s_fdf
 /*fdf.c*/
 
 /*clip.c*/
-void	clip_bottom(mlx_image_t *img, t_dot *s, t_dot *e, int xy[2]);
-void	clip_top(t_dot *s, t_dot *e, int xy[2]);
-void	clip_right(mlx_image_t *img, t_dot *s, t_dot *e, int xy[2]);
-void	clip_left(t_dot *s, t_dot *e, int xy[2]);
+void	clip_bottom(mlx_image_t *img, t_dot *s, t_dot *e, float xy[2]);
+void	clip_top(t_dot *s, t_dot *e, float xy[2]);
+void	clip_right(mlx_image_t *img, t_dot *s, t_dot *e, float xy[2]);
+void	clip_left(t_dot *s, t_dot *e, float xy[2]);
 
 /*colours.c*/
 int		little_big_endian(void);

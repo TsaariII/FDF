@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/25 14:49:25 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:57:21 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	format_validation(char *str)
 static void make_image(t_fdf *fdf)
 {
 	fit_it(&fdf->map);
-	//ft_zoom(&fdf->map, fdf->map.scale_xy, fdf->map.scale_z);
 	center(&fdf->map, fdf->map.len);
 	background(fdf, fdf->map.colour.background);
 	draw_map(fdf, fdf->map.dots_array);
@@ -56,14 +55,7 @@ int	main(int argc, char **argv)
 		error(NULL, "MLX fail");
 	map_data(&fdf, argv[1]);
 	make_window(&fdf);
-	// background(&fdf, fdf.map.colour.background);
-	// draw_map(&fdf, fdf.map.dots_array);
-	// mlx_loop_hook(fdf.mlx, the_hook, &fdf);
-	// mlx_loop(fdf.mlx);
-	// if (fdf.image)
-	// 	mlx_delete_image(fdf.mlx, fdf.image);
 	free(fdf.map.dots_array);
-	//mlx_terminate(fdf.mlx);
 	return (0);
 }
 
