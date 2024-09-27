@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 13:48:04 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/25 14:17:12 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:15:43 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void center(t_map *map, int len)
 
 	get_min(map, &min);
 	get_max(map, &max);
-	shift.axels[X] = (WIDTH / 2) - ((max.axels[X] + min.axels[X]) / 2);
-	shift.axels[Y] = (HEIGHT / 2) - ((max.axels[Y] + min.axels[Y]) / 2);
+	shift.axels[X] = (WIDTH / 2) - ((max.axels[X] + min.axels[X]) / 2) + map->x_move;
+	shift.axels[Y] = (HEIGHT / 2) - ((max.axels[Y] + min.axels[Y]) / 2) + map->y_move;
 	shift.axels[Z] = 0;
 	i = 0;
 	while (i < len)

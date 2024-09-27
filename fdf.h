@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/26 12:30:33 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:24:14 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct	s_map
 	char		**map_info;
 	int			len;
 	int			min_z;
+	int			x_move;
+	int			y_move;
 	float		scale_xy;
 	float		scale_z;
 	t_dot		*dots_array;
@@ -93,6 +95,8 @@ typedef struct s_fdf
 }	t_fdf;
 
 /*fdf.c*/
+//void	the_hook(t_fdf *fdf);
+void	make_image(t_fdf *fdf);
 
 /*clip.c*/
 void	clip_bottom(mlx_image_t *img, t_dot *s, t_dot *e, float xy[2]);
@@ -118,9 +122,10 @@ void	ft_zoom(t_map *map, double zoom_xy, double zoom_z);
 void	z_values(t_map *map);
 
 /*hooks.c*/
-void	the_hook(void *param);
+void	keypress(mlx_key_data_t data, void *param);
 void	the_scroll_hook(double xdelta, double ydelta, void *param);
-void zoom_image(t_fdf *fdf, double ydelta);
+void	zoom_image(t_fdf *fdf, double ydelta);
+void	move_map(mlx_key_data_t data, t_fdf *fdf);
 
 /*initilalize.c*/
 void	base_pixel(uint8_t *buffer, int colour, int alpha);

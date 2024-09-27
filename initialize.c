@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/25 14:52:53 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:12:49 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	kick_off_map(t_map *map)
 	map->origo.axels[X] = WIDTH / 2;
 	map->origo.axels[Y] = HEIGHT / 2;
 	map->origo.axels[Z] = 0;
+	map->x_move = 0;
+	map->y_move = 0;
 	base_colours(map);
 }
 

@@ -6,11 +6,17 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/26 12:57:21 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:29:06 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+static void	the_hook(t_fdf *fdf)
+{
+	mlx_scroll_hook(fdf->mlx, the_scroll_hook, fdf);
+	mlx_key_hook(fdf->mlx, &keypress, fdf);
+}
 
 static void	format_validation(char *str)
 {
@@ -21,7 +27,7 @@ static void	format_validation(char *str)
 		error(NULL, "Invalid file format");
 }
 
-static void make_image(t_fdf *fdf)
+void	make_image(t_fdf *fdf)
 {
 	fit_it(&fdf->map);
 	center(&fdf->map, fdf->map.len);
@@ -37,8 +43,8 @@ static void make_window(t_fdf *fdf)
 	depth = mlx_image_to_window(fdf->mlx, fdf->image, 0, 0);
 	mlx_set_instance_depth(fdf->image->instances, depth -1);
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
-	mlx_loop_hook(fdf->mlx, the_hook, fdf);
-	mlx_scroll_hook(fdf->mlx, the_scroll_hook, fdf);
+	//mlx_loop_hook(fdf->mlx, the_hook, fdf);
+	the_hook(fdf);
 	mlx_loop(fdf->mlx);
 	mlx_terminate(fdf->mlx);
 }
