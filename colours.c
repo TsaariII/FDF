@@ -6,19 +6,21 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:17:48 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/23 15:06:02 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:30:17 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//dots[i].colour = gradient(colours.bottom, colours.base, - map->min_z, (map->min_z - dots[i].axels[Z]));
 
 #include "fdf.h"
 
 void	colour_dots(t_map *map, t_dot *dots, t_colours colours)
 {
 	int	i;
-	int z;
+	float z;
 
 	i = 0;
-	z = map->dimension.axels[Z] - map->min_z;
+	z = map->min_z - map->dimension.axels[Z];
 	while (i < map->len)
 	{
 		dots[i].colour = WHITE;
@@ -30,9 +32,9 @@ void	colour_dots(t_map *map, t_dot *dots, t_colours colours)
 			dots[i].colour = colours.base;
 		else if (dots[i].axels[Z] == map->min_z && map->min_z != 0)
 			dots[i].colour = colours.bottom;
-		 else if (dots[i].axels[Z] > 0)
+		else if (dots[i].axels[Z] > 0)
 		 	dots[i].colour = gradient(colours.base, colours.top, (int)map->dimension.axels[Z], dots[i].axels[Z]);
-		 else
+		else
 		 	dots[i].colour = gradient(colours.bottom, colours.base, - map->min_z, (map->min_z - dots[i].axels[Z]));
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/26 14:29:06 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:15:27 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@ static void	format_validation(char *str)
 		error(NULL, "Invalid file format");
 }
 
-void	make_image(t_fdf *fdf)
-{
-	fit_it(&fdf->map);
-	center(&fdf->map, fdf->map.len);
-	background(fdf, fdf->map.colour.background);
-	draw_map(fdf, fdf->map.dots_array);
-}
-
 static void make_window(t_fdf *fdf)
 {
 	int32_t depth;
@@ -43,10 +35,17 @@ static void make_window(t_fdf *fdf)
 	depth = mlx_image_to_window(fdf->mlx, fdf->image, 0, 0);
 	mlx_set_instance_depth(fdf->image->instances, depth -1);
 	mlx_set_setting(MLX_STRETCH_IMAGE, 1);
-	//mlx_loop_hook(fdf->mlx, the_hook, fdf);
 	the_hook(fdf);
 	mlx_loop(fdf->mlx);
 	mlx_terminate(fdf->mlx);
+}
+
+void	make_image(t_fdf *fdf)
+{
+	fit_it(&fdf->map);
+	center(&fdf->map, fdf->map.len);
+	background(fdf, fdf->map.colour.background);
+	draw_map(fdf, fdf->map.dots_array);
 }
 
 int	main(int argc, char **argv)
@@ -60,29 +59,13 @@ int	main(int argc, char **argv)
 	if (!fdf.mlx)
 		error(NULL, "MLX fail");
 	map_data(&fdf, argv[1]);
+	fdf.map.original_values = ft_calloc(fdf.map.len, sizeof(t_dot));
+	if (!fdf.map.original_values)
+		error(&fdf.map, "Malloc fail");
+	copy_dots(fdf.map.dots_array, fdf.map.original_values, fdf.map.len);
+	rotate_and_project(&fdf);
+	colour_dots(&fdf.map, fdf.map.dots_array, fdf.map.colour);
 	make_window(&fdf);
 	free(fdf.map.dots_array);
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	t_fdf	fdf;
-
-// 	if (argc != 2)
-// 		error(NULL, "Wrong number of inputs");
-// 	format_validation(argv[1]);
-// 	set_up_fdf(&fdf);
-// 	if (!fdf.mlx)
-// 		error(NULL, "MLX fail");
-// 	map_data(&fdf, argv[1]);
-// 	background(&fdf, fdf.map.colour.background);
-// 	draw_map(&fdf, fdf.map.dots_array);
-// 	mlx_loop_hook(fdf.mlx, the_hook, &fdf);
-// 	mlx_loop(fdf.mlx);
-// 	if (fdf.image)
-// 		mlx_delete_image(fdf.mlx, fdf.image);
-// 	free(fdf.map.dots_array);
-// 	mlx_terminate(fdf.mlx);
-// 	return (0);
-// }

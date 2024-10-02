@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/23 15:15:29 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:09:49 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,17 @@ void	this_dot_is_valid(char *str, t_map *map)
 		else if (*str != 10)
 			error(map, "Invalid map");
 		str++;
+	}
+}
+
+void	copy_dots(t_dot *src, t_dot *dest, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = src[i];
+		i++;
 	}
 }

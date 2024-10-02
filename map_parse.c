@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/25 10:50:07 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:43:59 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ void	map_data(t_fdf *fdf, char *file)
 		error(NULL, "Malloc fail");
 	}
 	create_coordinates(&fdf->map);
-	rotate_and_project(fdf);
-	colour_dots(&fdf->map, fdf->map.dots_array, fdf->map.colour);
+	// rotate_and_project(fdf);
+	// colour_dots(&fdf->map, fdf->map.dots_array, fdf->map.colour);
 	ft_free_array(fdf->map.map_info);
 	fdf->map.map_info = NULL;
 	close(fd);

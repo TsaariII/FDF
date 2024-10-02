@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/26 12:38:01 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:09:33 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ static void	draw_line(t_fdf *fdf, t_dot point0, t_dot point1)
 			dot.colour = point0.colour;
 		else
 			dot.colour = gradient(point0.colour, point1.colour, len, len - line);
-		//if ((dot.axels[X] > 0 && dot.axels[X] < fdf->image->width) && (dot.axels[Y] > 0 && dot.axels[Y] < fdf->image->height))
 		place_dot(fdf->image, dot.axels[X], dot.axels[Y], dot.colour);
 		dot.axels[X] += delta.axels[X];
 		dot.axels[Y] += delta.axels[Y];

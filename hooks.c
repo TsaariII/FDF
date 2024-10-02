@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:25:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/27 10:26:10 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:15:53 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ void	keypress(mlx_key_data_t data, void *param)
 
 	fdf = (t_fdf *)param;
 
-	//rotation(data, fdf);
 	move_map(data, fdf);
+	elevation(data, fdf);
 	if (data.key == MLX_KEY_ESCAPE)
 	{
 		mlx_close_window(fdf->mlx);
 		return ;
 	}
-	make_image(fdf);
 }
 
 void the_scroll_hook(double xdelta, double ydelta, void *param)
@@ -49,42 +48,45 @@ void zoom_image(t_fdf *fdf, double ydelta)
 		fdf->map.scale_xy *= 0.9;
 		fdf->map.scale_z *= 0.9;
 	}
-	fit_it(&fdf->map);
-	center(&fdf->map, fdf->map.len);
-	background(fdf, fdf->map.colour.background);
-	draw_map(fdf, fdf->map.dots_array);
+	make_image(fdf);
+}
+
+void rotation(mlx_key_data_t data, t_fdf *fdf)
+{
+	if (data.key == MLX_KEY_D)
+		fdf->map.z_rotate -= 0.02;
+	else if (data.key  == MLX_KEY_A)
+		fdf->map.z_rotate += 0.02;
+	else if (data.key == MLX_KEY_W)
+		fdf->map.x_rotate += 0.02;
+	else if (data.key == MLX_KEY_S)
+		fdf->map.x_rotate -= 0.02;
+	rotate_and_project(fdf);
+	colour_dots(&fdf->map, fdf->map.original_values, fdf->map.colour);
+	make_image(fdf);
 }
 
 void move_map(mlx_key_data_t data, t_fdf *fdf)
 {
-	if (data.key == MLX_KEY_D)
+	if (data.key == MLX_KEY_RIGHT)
 		fdf->map.x_move += 5;
-	else if (data.key == MLX_KEY_A)
+	else if (data.key == MLX_KEY_LEFT)
 		fdf->map.x_move -= 5;
-	else if (data.key == MLX_KEY_W)
+	else if (data.key == MLX_KEY_UP)
 		fdf->map.y_move -= 5;
-	else if (data.key == MLX_KEY_S)
+	else if (data.key == MLX_KEY_DOWN)
 		fdf->map.y_move += 5;
+	make_image(fdf);
 }
 
+void elevation(mlx_key_data_t data, t_fdf *fdf)
+{
+	if (data.key == MLX_KEY_P)
+		fdf->map.factor *= 1.1;
+	else if (data.key == MLX_KEY_M)
+		fdf->map.factor *= 0.9;
+	rotate_and_project(fdf);
+	colour_dots(&fdf->map, fdf->map.dots_array, fdf->map.colour);
+	make_image(fdf);
+}
 
-
-
-
-// void	rotation(mlx_key_data_t key, t_fdf *fdf)
-// {
-
-// }
-
-
-// void	the_hook(t_fdf *fdf)
-// {
-// 	t_fdf	*fdf;
-// 	mlx_t	*mlx;
-
-// 	fdf = param;
-// 	mlx = fdf->mlx;
-// 	if (mlx_is_key_down(fdf->mlx, MLX_KEY_ESCAPE))
-// 		mlx_close_window(fdf->mlx);
-
-// }

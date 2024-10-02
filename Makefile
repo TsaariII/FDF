@@ -86,3 +86,5 @@ re: fclean all
 		# 	cmake $(MLX) -B $(MLX)/build; \
 		# fi
 		# @make -C $(MLX)/build -j4
+
+.SILENT: all clean

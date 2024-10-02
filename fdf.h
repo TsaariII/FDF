@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/27 10:24:14 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:45:11 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,16 @@ typedef struct	s_map
 	char		**map_info;
 	int			len;
 	int			min_z;
+	float		factor;
 	int			x_move;
 	int			y_move;
 	float		scale_xy;
 	float		scale_z;
+	float		x_rotate;
+	float		y_rotate;
+	float		z_rotate;
 	t_dot		*dots_array;
+	t_dot		*original_values;
 	t_dot		dimension;
 	t_dot		origo;
 	t_colours	colour;
@@ -126,6 +131,7 @@ void	keypress(mlx_key_data_t data, void *param);
 void	the_scroll_hook(double xdelta, double ydelta, void *param);
 void	zoom_image(t_fdf *fdf, double ydelta);
 void	move_map(mlx_key_data_t data, t_fdf *fdf);
+void elevation(mlx_key_data_t data, t_fdf *fdf);
 
 /*initilalize.c*/
 void	base_pixel(uint8_t *buffer, int colour, int alpha);
@@ -143,6 +149,7 @@ void 	read_data(t_map *map, int fd);
 void center(t_map *map, int len);
 void	rotate_and_project(t_fdf *fdf);
 void 	positive(t_map *map);
+void rotation(mlx_key_data_t data, t_fdf *fdf);
 
 /*utils.c*/
 void	base_colours(t_map *map);
@@ -150,5 +157,6 @@ int		error(t_map *map, char *error_msg);
 void	error_mlx(t_fdf *fdf);
 void	this_dot_is_valid(char *str, t_map *map);
 void	uneven(int x, int line_num, t_map *map);
+void	copy_dots(t_dot *src, t_dot *dest, int len);
 
 #endif
