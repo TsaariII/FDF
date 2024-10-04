@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/04 12:26:33 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:07:26 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void	read_data(t_map *map, int fd)
 
 	map->map_info = malloc(1 * sizeof(char *));
 	line = get_next_line(fd);
+	if (!line)
+	{
+		free(line);
+		error(NULL, "Empty file");
+	}
 	map->map_info[0] = line;
 	i = 1;
 	while (line)
