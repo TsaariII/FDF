@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/30 15:46:49 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:50:08 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	base_colours(t_map *map)
 {
-	map->colour.background = BIANCHI;
-	map->colour.top = BLACK;
-	map->colour.bottom = YELLOW;
-	map->colour.base = WHITE;
+	map->col.background = BIANCHI;
+	map->col.top = BLACK;
+	map->col.bottom = YELLOW;
+	map->col.base = WHITE;
 }
 
 void	set_up_fdf(t_fdf *fdf)
@@ -35,10 +35,10 @@ void	set_up_fdf(t_fdf *fdf)
 void	kick_off_map(t_map *map)
 {
 	map->map_info = NULL;
-	map->dots_array = NULL;
-	map->dimension.axels[X] = 0;
-	map->dimension.axels[Y] = 0;
-	map->dimension.axels[Z] = 0;
+	map->dots = NULL;
+	map->dim.axels[X] = 0;
+	map->dim.axels[Y] = 0;
+	map->dim.axels[Z] = 0;
 	map->len = 0;
 	map->scale_xy = 1;
 	map->scale_z = 1;
@@ -49,9 +49,9 @@ void	kick_off_map(t_map *map)
 	map->origo.axels[Z] = 0;
 	map->x_move = 0;
 	map->y_move = 0;
-	map->x_rotate = 0;
-	map->y_rotate = 0;
-	map->z_rotate = 0;
+	map->x_rot = 0;
+	map->y_rot = 0;
+	map->z_rot = 0;
 	base_colours(map);
 }
 
@@ -79,10 +79,9 @@ void	dimensions(t_map *map)
 			error(map, "Inconsistent row length");
 		h++;
 	}
-	map->dimension.axels[X] = len;
-	map->dimension.axels[Y] = h;
+	map->dim.axels[X] = len;
+	map->dim.axels[Y] = h;
 }
-
 
 void	base_pixel(uint8_t *buffer, int colour, int alpha)
 {
@@ -91,13 +90,13 @@ void	base_pixel(uint8_t *buffer, int colour, int alpha)
 		buffer[RED] = colour;
 		buffer[GREEN] = colour >> 8;
 		buffer[BLUE] = colour >> 16;
-		buffer[ALPHA] =	alpha;
+		buffer[ALPHA] = alpha;
 	}
 	else
 	{
 		buffer[RED] = colour >> 16;
 		buffer[GREEN] = colour >> 8;
 		buffer[BLUE] = colour;
-		buffer[ALPHA] =	alpha;
+		buffer[ALPHA] = alpha;
 	}
 }

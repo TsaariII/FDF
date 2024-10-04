@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:27:39 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/08/07 14:39:30 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:33:06 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static int	put_nbr(char c, int base)
 
 int	ft_atoi_base(const char *str, int base)
 {
-	int res;
-	int p_n;
-	int num;
+	int	res;
+	int	p_n;
+	int	num;
 
 	res = 0;
 	p_n = 1;
 	num = 0;
-	if  (!str)
+	if (!str)
 		return (-1);
 	if (*str == '-')
 	{
@@ -54,8 +54,8 @@ int	ft_atoi_base(const char *str, int base)
 	while (num >= 0)
 	{
 		num = put_nbr(ft_lower(*str), base);
-		if  (num < 0)
-			break;
+		if (num < 0)
+			break ;
 		res = res * base;
 		res = res + num;
 		str++;

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/30 10:09:49 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:35:19 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	error(t_map *map, char *error_msg)
 			ft_free_array(map->map_info);
 			map->map_info = NULL;
 		}
-		if (map->dots_array)
+		if (map->dots)
 		{
-			free(map->dots_array);
-			map->dots_array = NULL;
+			free(map->dots);
+			map->dots = NULL;
 		}
 	}
 	ft_printf("%s\n", error_msg);
@@ -33,9 +33,9 @@ int	error(t_map *map, char *error_msg)
 
 void	uneven(int x, int line_num, t_map *map)
 {
-	map->dots_array[x].axels[Z] = 0;
-	map->dots_array[x].axels[X] = map->dimension.axels[X];
-	map->dots_array[x].axels[Y] = line_num - map->dimension.axels[Y] / 2;
+	map->dots[x].axels[Z] = 0;
+	map->dots[x].axels[X] = map->dim.axels[X];
+	map->dots[x].axels[Y] = line_num - map->dim.axels[Y] / 2;
 }
 
 void	error_mlx(t_fdf *fdf)
@@ -52,7 +52,7 @@ void	this_dot_is_valid(char *str, t_map *map)
 		{
 			if (*str >= 'G' && *str <= 'Z' && *str != 'X')
 				error(map, "Invalid map");
-			if (*str >= 'g' && *str <= 'z' && *str !='x')
+			if (*str >= 'g' && *str <= 'z' && *str != 'x')
 				error(map, "Invalid map");
 		}
 		else if (*str != 10)
@@ -63,7 +63,7 @@ void	this_dot_is_valid(char *str, t_map *map)
 
 void	copy_dots(t_dot *src, t_dot *dest, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len)

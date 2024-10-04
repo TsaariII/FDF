@@ -6,36 +6,35 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:17:48 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/02 11:30:17 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:33:06 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//dots[i].colour = gradient(colours.bottom, colours.base, - map->min_z, (map->min_z - dots[i].axels[Z]));
-
 #include "fdf.h"
 
-void	colour_dots(t_map *map, t_dot *dots, t_colours colours)
+void	colour_dots(t_map *map, int i)
 {
-	int	i;
-	float z;
-
-	i = 0;
-	z = map->min_z - map->dimension.axels[Z];
 	while (i < map->len)
 	{
-		dots[i].colour = WHITE;
-		if (dots[i].colour_hex > 0)
-			dots[i].colour = dots[i].colour_hex;
-		else if (dots[i].axels[Z] == map->dimension.axels[Z])
-			dots[i].colour = colours.top;
-		else if (dots[i].axels[Z] == 0)
-			dots[i].colour = colours.base;
-		else if (dots[i].axels[Z] == map->min_z && map->min_z != 0)
-			dots[i].colour = colours.bottom;
-		else if (dots[i].axels[Z] > 0)
-		 	dots[i].colour = gradient(colours.base, colours.top, (int)map->dimension.axels[Z], dots[i].axels[Z]);
+		map->dots[i].col = WHITE;
+		if (map->dots[i].col_hex > 0)
+			map->dots[i].col = map->dots[i].col_hex;
+		else if (map->dim.axels[Z] < 0.05)
+			map->dots[i].col = map->col.base;
+		else if (map->dots[i].axels[Z] == map->dim.axels[Z])
+			map->dots[i].col = map->col.top;
+		else if (map->dots[i].axels[Z] < 0.05 && map->dots[i].axels[Z] > -0.05)
+			map->dots[i].col = map->col.base;
+		else if (map->dots[i].axels[Z] == map->min_z && map->min_z != 0)
+			map->dots[i].col = map->col.base;
+		else if (map->dots[i].axels[Z] == map->min_z && map->min_z != 0)
+			map->dots[i].col = map->col.bottom;
+		else if (map->dots[i].axels[Z] > 0)
+			map->dots[i].col = gradient(map->col.base, map->col.top,
+					(int)map->dim.axels[Z], map->dots[i].axels[Z]);
 		else
-		 	dots[i].colour = gradient(colours.bottom, colours.base, - map->min_z, (map->min_z - dots[i].axels[Z]));
+			map->dots[i].col = gradient(map->col.bottom, map->col.base,
+					-map->min_z, (map->min_z - map->dots[i].axels[Z]));
 		i++;
 	}
 }
@@ -43,12 +42,17 @@ void	colour_dots(t_map *map, t_dot *dots, t_colours colours)
 int32_t	gradient(int colour_s, int colour_e, int len, int dot)
 {
 	float	ratio;
-	int red;
-	int green;
-	int blue;
-	ratio = (float)dot / len;
-	red = ((1 - ratio) * ((colour_s >> 16) & 0xFF)) + (ratio * ((colour_e >> 16) & 0xFF));
-	green = ((1 - ratio) * ((colour_s >> 8) & 0xFF)) + (ratio * ((colour_e >> 8) & 0xFF));
+	int		red;
+	int		green;
+	int		blue;
+
+	if (len == 0)
+		return (colour_s);
+	ratio = (float)dot / (float)len;
+	red = ((1 - ratio) * ((colour_s >> 16) & 0xFF))
+		+ (ratio * ((colour_e >> 16) & 0xFF));
+	green = ((1 - ratio) * ((colour_s >> 8) & 0xFF))
+		+ (ratio * ((colour_e >> 8) & 0xFF));
 	blue = ((1 - ratio) * (colour_s & 0xFF)) + (ratio * (colour_e & 0xFF));
 	return ((red << 16) + (green << 8) + blue);
 }
@@ -57,7 +61,7 @@ void	background(t_fdf *fdf, __int32_t background)
 {
 	int	pixel;
 	int	grid[2];
-	int alpha;
+	int	alpha;
 
 	alpha = 0xFF;
 	grid[X] = 0;
@@ -66,7 +70,7 @@ void	background(t_fdf *fdf, __int32_t background)
 	{
 		while (grid[X] < WIDTH)
 		{
-			pixel = (grid[Y] * (fdf->image->width *4)) + (grid[X] * 4);
+			pixel = (grid[Y] * (fdf->image->width * 4)) + (grid[X] * 4);
 			base_pixel(&fdf->image->pixels[pixel], background, alpha);
 			grid[X]++;
 		}
@@ -77,7 +81,7 @@ void	background(t_fdf *fdf, __int32_t background)
 
 int32_t	paint_hexcolour(char *str)
 {
-	int32_t colour;
+	int32_t	colour;
 
 	while (*str != ',')
 		str++;
@@ -87,7 +91,7 @@ int32_t	paint_hexcolour(char *str)
 
 int	little_big_endian(void)
 {
-	int	endian;
+	int		endian;
 	int16_t	x;
 
 	x = 0x0001;

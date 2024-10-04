@@ -2,6 +2,7 @@ NAME := fdf
 
 SRC =	fdf.c\
 		clip.c\
+		clip2.c\
 		draw.c\
 		draw_utils.c\
 		hooks.c\
@@ -9,6 +10,7 @@ SRC =	fdf.c\
 		map_parse.c\
 		colours.c\
 		rotation.c\
+		rotation2.c\
 		utils.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c

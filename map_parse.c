@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/30 14:43:59 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:26:33 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	coordinates(char *line, t_map *map, int line_num)
 	char	**dots;
 
 	h = 0;
-	id = line_num * map->dimension.axels[X];
+	id = line_num * map->dim.axels[X];
 	dots = ft_split(line, ' ');
 	if (!dots)
 		error(map, "Malloc fail");
@@ -27,15 +27,15 @@ static int	coordinates(char *line, t_map *map, int line_num)
 	{
 		this_dot_is_valid(dots[h], map);
 		if (ft_strchr(dots[h], ','))
-			map->dots_array[id].colour_hex = paint_hexcolour(dots[h]);
-		map->dots_array[id].axels[X] = h - (map->dimension.axels[X] - 1) / 2.0;
-		map->dots_array[id].axels[Y] = line_num - (map->dimension.axels[Y] / 2.0);
-		map->dots_array[id].axels[Z] = ft_atoi(dots[h]);
+			map->dots[id].col_hex = paint_hexcolour(dots[h]);
+		map->dots[id].axels[X] = h - (map->dim.axels[X] - 1) / 2.0;
+		map->dots[id].axels[Y] = line_num - (map->dim.axels[Y] / 2.0);
+		map->dots[id].axels[Z] = ft_atoi(dots[h]);
 		h++;
 		id++;
 	}
 	ft_free_array(dots);
-	if (h != map->dimension.axels[X] && line_num != map->dimension.axels[Y])
+	if (h != map->dim.axels[X] && line_num != map->dim.axels[Y])
 		uneven(++id, line_num, map);
 	return (EXIT_SUCCESS);
 }
@@ -55,12 +55,12 @@ void	create_coordinates(t_map *map)
 		coordinates(temp[i], map, i);
 		i++;
 	}
-	z_values(map);
+	z_values(map, map->dots, map->len);
 }
 
 int	ft_array_len(char **str)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (str[len])
@@ -68,13 +68,12 @@ int	ft_array_len(char **str)
 	return (len);
 }
 
-void read_data(t_map *map, int fd)
+void	read_data(t_map *map, int fd)
 {
-	char *line;
-	int i;
-	char **temp;
+	char	*line;
+	int		i;
+	char	**temp;
 
-	line = NULL;
 	map->map_info = malloc(1 * sizeof(char *));
 	line = get_next_line(fd);
 	map->map_info[0] = line;
@@ -83,7 +82,8 @@ void read_data(t_map *map, int fd)
 	{
 		temp = map->map_info;
 		line = get_next_line(fd);
-		temp = ft_realloc(map->map_info, i * sizeof(char *), (i + 1) * sizeof(char *));
+		temp = ft_realloc(map->map_info, i
+				* sizeof(char *), (i + 1) * sizeof(char *));
 		if (!temp)
 		{
 			free(line);
@@ -99,7 +99,7 @@ void read_data(t_map *map, int fd)
 
 void	map_data(t_fdf *fdf, char *file)
 {
-	int fd;
+	int	fd;
 
 	kick_off_map(&fdf->map);
 	fd = open(file, O_RDONLY);
@@ -107,16 +107,14 @@ void	map_data(t_fdf *fdf, char *file)
 		error(&fdf->map, "Open error");
 	read_data(&fdf->map, fd);
 	dimensions(&fdf->map);
-	fdf->map.len = fdf->map.dimension.axels[X] * fdf->map.dimension.axels[Y];
-	fdf->map.dots_array = ft_calloc(fdf->map.len, sizeof(t_dot));
-	if (!fdf->map.dots_array)
+	fdf->map.len = fdf->map.dim.axels[X] * fdf->map.dim.axels[Y];
+	fdf->map.dots = ft_calloc(fdf->map.len, sizeof(t_dot));
+	if (!fdf->map.dots)
 	{
 		ft_free_array(fdf->map.map_info);
 		error(NULL, "Malloc fail");
 	}
 	create_coordinates(&fdf->map);
-	// rotate_and_project(fdf);
-	// colour_dots(&fdf->map, fdf->map.dots_array, fdf->map.colour);
 	ft_free_array(fdf->map.map_info);
 	fdf->map.map_info = NULL;
 	close(fd);

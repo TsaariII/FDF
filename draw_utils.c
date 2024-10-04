@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/02 10:48:46 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:29:38 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,52 @@
 
 void	get_min(t_map *map, t_dot *min)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	min->axels[X] = map->dots_array[0].axels[X];
-	min->axels[Y] = map->dots_array[0].axels[Y];
+	min->axels[X] = map->dots[0].axels[X];
+	min->axels[Y] = map->dots[0].axels[Y];
 	while (i < map->len)
 	{
-		if (map->dots_array[i].axels[X] < min->axels[X])
-			min->axels[X] = map->dots_array[i].axels[X];
-		if (map->dots_array[i].axels[Y] < min->axels[Y])
-			min->axels[Y] = map->dots_array[i].axels[Y];
+		if (map->dots[i].axels[X] < min->axels[X])
+			min->axels[X] = map->dots[i].axels[X];
+		if (map->dots[i].axels[Y] < min->axels[Y])
+			min->axels[Y] = map->dots[i].axels[Y];
 		i++;
 	}
 }
 
 void	get_max(t_map *map, t_dot *max)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	max->axels[X] = map->dots_array[0].axels[X];
-	max->axels[Y] = map->dots_array[0].axels[Y];
+	max->axels[X] = map->dots[0].axels[X];
+	max->axels[Y] = map->dots[0].axels[Y];
 	while (i < map->len)
 	{
-		if (map->dots_array[i].axels[X] > max->axels[X])
-			max->axels[X] = map->dots_array[i].axels[X];
-		if (map->dots_array[i].axels[Y] > max->axels[Y])
-			max->axels[Y] = map->dots_array[i].axels[Y];
+		if (map->dots[i].axels[X] > max->axels[X])
+			max->axels[X] = map->dots[i].axels[X];
+		if (map->dots[i].axels[Y] > max->axels[Y])
+			max->axels[Y] = map->dots[i].axels[Y];
 		i++;
 	}
 }
 
 void	ft_zoom(t_map *map, double zoom_xy, double zoom_z)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < map->len)
 	{
 		if (zoom_xy)
 		{
-			map->dots_array[i].axels[X] *= zoom_xy;
-			map->dots_array[i].axels[Y] *= zoom_xy;
+			map->dots[i].axels[X] *= zoom_xy;
+			map->dots[i].axels[Y] *= zoom_xy;
 		}
 		if (zoom_z)
-			map->dots_array[i].axels[Z] *= zoom_z;
+			map->dots[i].axels[Z] *= zoom_z;
 		i++;
 	}
 }
@@ -82,34 +82,22 @@ void	fit_it(t_map *map)
 	ft_zoom(map, fmin(1 / zoom_y, 1 / zoom_x), map->scale_z);
 }
 
-void z_values(t_map *map)
+void	z_values(t_map *map, t_dot *dots, int len)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	while (i < map->len)
+	while (i < len)
 	{
-		if (map->dots_array[i].axels[Z] < map->min_z)
-			map->min_z = map->dots_array[i].axels[Z];
+		if (dots[i].axels[Z] < map->min_z)
+			map->min_z = map->dots[i].axels[Z];
 		i++;
 	}
 	i = 0;
 	while (i < map->len)
 	{
-		if (map->dots_array[i].axels[Z] > map->dimension.axels[Z])
-			map->dimension.axels[Z] = map->dots_array[i].axels[Z];
+		if (dots[i].axels[Z] > map->dim.axels[Z])
+			map->dim.axels[Z] = dots[i].axels[Z];
 		i++;
 	}
 }
-
-// static void	ft_zoom(t_map *map, double zoom)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (i < map->len)
-// 	{
-// 		map->dots_array[i].axels[X] *= zoom;
-// 		map->dots_array[i].axels[Y] *= zoom;
-// 		i++;
-// 	}
-// }

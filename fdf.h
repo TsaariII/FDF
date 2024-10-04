@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/30 15:45:11 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/04 12:26:25 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,29 @@ typedef enum s_rgb
 	ALPHA
 }	t_rgb;
 
-typedef	struct s_colours
+typedef struct s_colours
 {
-	int32_t top;
-	int32_t bottom;
-	int32_t background;
-	int32_t base;
+	int32_t	top;
+	int32_t	bottom;
+	int32_t	background;
+	int32_t	base;
 }	t_colours;
 
-typedef	enum s_coordinates
+typedef enum s_coordinates
 {
 	X,
 	Y,
 	Z,
 }	t_coordinates;
 
-typedef	struct s_dot
+typedef struct s_dot
 {
-	int32_t	colour;
-	int32_t	colour_hex;
-	float		axels[3];
+	int32_t	col;
+	int32_t	col_hex;
+	float	axels[3];
 }	t_dot;
 
-typedef struct	s_map
+typedef struct s_map
 {
 	char		**map_info;
 	int			len;
@@ -82,14 +82,14 @@ typedef struct	s_map
 	int			y_move;
 	float		scale_xy;
 	float		scale_z;
-	float		x_rotate;
-	float		y_rotate;
-	float		z_rotate;
-	t_dot		*dots_array;
-	t_dot		*original_values;
-	t_dot		dimension;
+	float		x_rot;
+	float		y_rot;
+	float		z_rot;
+	t_dot		*dots;
+	t_dot		*org_val;
+	t_dot		dim;
 	t_dot		origo;
-	t_colours	colour;
+	t_colours	col;
 }	t_map;
 
 typedef struct s_fdf
@@ -100,21 +100,26 @@ typedef struct s_fdf
 }	t_fdf;
 
 /*fdf.c*/
-//void	the_hook(t_fdf *fdf);
 void	make_image(t_fdf *fdf);
+void	insert_menu(t_fdf *fdf, char *str);
 
 /*clip.c*/
+int		clip_line(mlx_image_t *img, t_dot *s, t_dot *e);
+int		compute_outcode(mlx_image_t *img, t_dot *dot);
+
+/*clip2.c*/
 void	clip_bottom(mlx_image_t *img, t_dot *s, t_dot *e, float xy[2]);
 void	clip_top(t_dot *s, t_dot *e, float xy[2]);
 void	clip_right(mlx_image_t *img, t_dot *s, t_dot *e, float xy[2]);
 void	clip_left(t_dot *s, t_dot *e, float xy[2]);
+void	update_xy(mlx_image_t *img, float *xy, int *out, t_dot *dot);
 
 /*colours.c*/
 int		little_big_endian(void);
 int32_t	gradient(int colour_s, int colour_e, int len, int dot);
 int32_t	paint_hexcolour(char *str);
 void	background(t_fdf *fdf, __int32_t background);
-void	colour_dots(t_map *map, t_dot *dots, t_colours colours);
+void	colour_dots(t_map *map, int i);
 
 /*draw.c*/
 void	draw_map(t_fdf *fdf, t_dot *dots);
@@ -124,14 +129,14 @@ void	get_min(t_map *map, t_dot *min);
 void	get_max(t_map *map, t_dot *max);
 void	fit_it(t_map *map);
 void	ft_zoom(t_map *map, double zoom_xy, double zoom_z);
-void	z_values(t_map *map);
+void	z_values(t_map *map, t_dot *dots, int len);
 
 /*hooks.c*/
 void	keypress(mlx_key_data_t data, void *param);
 void	the_scroll_hook(double xdelta, double ydelta, void *param);
 void	zoom_image(t_fdf *fdf, double ydelta);
 void	move_map(mlx_key_data_t data, t_fdf *fdf);
-void elevation(mlx_key_data_t data, t_fdf *fdf);
+void	elevation(mlx_key_data_t data, t_fdf *fdf);
 
 /*initilalize.c*/
 void	base_pixel(uint8_t *buffer, int colour, int alpha);
@@ -140,16 +145,23 @@ void	kick_off_map(t_map *map);
 void	set_up_fdf(t_fdf *fdf);
 
 /*map_parse.c*/
-void	create_coordinates(t_map *map);
 int		ft_array_len(char **str);
+void	create_coordinates(t_map *map);
 void	map_data(t_fdf *fdf, char *file);
-void 	read_data(t_map *map, int fd);
+void	read_data(t_map *map, int fd);
 
 /*rotation.c*/
-void center(t_map *map, int len);
+void	center(t_map *map, int len);
 void	rotate_and_project(t_fdf *fdf);
-void 	positive(t_map *map);
-void rotation(mlx_key_data_t data, t_fdf *fdf);
+void	positive(t_map *map);
+void	to_isometric(t_dot *dot);
+
+/*rotation2.c*/
+void	rotate_x(t_map *map, t_dot *dot);
+void	rotate_y(t_map *map, t_dot *dot);
+void	rotate_z(t_map *map, t_dot *dot);
+void	format_validation(char *str);
+void	reset_map(t_fdf *fdf);
 
 /*utils.c*/
 void	base_colours(t_map *map);

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 13:25:17 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/09/23 14:11:25 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:31:33 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	*ft_realloc(void *ptr, size_t old, size_t new)
 		ft_memcpy(new_ptr, ptr, copy);
 		free(ptr);
 	}
-	return(new_ptr);
+	return (new_ptr);
 }
