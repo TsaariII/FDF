@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/03 10:50:08 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:33:29 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	dimensions(t_map *map)
 	w = 0;
 	first = ft_split(map->map_info[0], ' ');
 	if (!first)
-		error(map, "Malloc fail 1");
+		error(map, "Malloc fail");
 	len = ft_array_len(first);
 	ft_free_array(first);
 	while (map->map_info[h])
