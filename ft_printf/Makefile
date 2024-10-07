@@ -15,7 +15,7 @@ CC		= cc
 
 FLAGS	= -Wall -Werror -Wextra -g
 
-AR		= ar rcs
+AR		= @ar rcs
 
 OBJS	= $(SRC:.c=.o)
 
@@ -25,7 +25,8 @@ OBJS	= $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-				$(AR) $(NAME) $(OBJS)
+			@
+			$(AR) $(NAME) $(OBJS)
 
 clean:
 		@rm -f $(OBJS)

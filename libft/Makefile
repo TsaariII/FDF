@@ -56,7 +56,7 @@ BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 
 HEAD	= ./libft
 
-AR		= ar rcs
+AR		= @ar rcs
 
 CC		= cc
 
