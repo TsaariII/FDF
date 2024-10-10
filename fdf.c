@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 10:23:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/03 14:22:34 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:58:25 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ void	insert_menu(t_fdf *fdf, char *str)
 	mlx_image_t		*img;
 
 	texture = mlx_load_png(str);
+	if (!texture)
+		error(fdf, &fdf->map, NULL);
 	img = mlx_texture_to_image(fdf->mlx, texture);
 	if (!texture)
 	{
 		mlx_delete_texture(texture);
-		error(&fdf->map, "Malloc fail");
+		error(fdf, &fdf->map, NULL);
 	}
 	mlx_delete_texture(texture);
 	mlx_image_to_window(fdf->mlx, img, 10, 10);
@@ -63,18 +65,16 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	if (argc != 2)
-		error(NULL, "Wrong number of inputs");
+		error(NULL, NULL, "Wrong number of inputs");
 	format_validation(argv[1]);
-	set_up_fdf(&fdf);
-	if (!fdf.mlx)
-		error(NULL, "MLX fail");
 	map_data(&fdf, argv[1]);
 	fdf.map.org_val = ft_calloc(fdf.map.len, sizeof(t_dot));
 	if (!fdf.map.org_val)
-		error(&fdf.map, "Malloc fail");
+		error(NULL, &fdf.map, "Malloc fail");
 	copy_dots(fdf.map.dots, fdf.map.org_val, fdf.map.len);
 	rotate_and_project(&fdf);
 	colour_dots(&fdf.map, i);
+	set_up_fdf(&fdf);
 	make_window(&fdf);
 	free(fdf.map.org_val);
 	free(fdf.map.dots);

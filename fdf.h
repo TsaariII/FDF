@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/04 12:26:25 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:00:40 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,10 +142,8 @@ void	elevation(mlx_key_data_t data, t_fdf *fdf);
 void	base_pixel(uint8_t *buffer, int colour, int alpha);
 void	dimensions(t_map *map);
 void	kick_off_map(t_map *map);
-void	set_up_fdf(t_fdf *fdf);
 
 /*map_parse.c*/
-int		ft_array_len(char **str);
 void	create_coordinates(t_map *map);
 void	map_data(t_fdf *fdf, char *file);
 void	read_data(t_map *map, int fd);
@@ -165,8 +163,9 @@ void	reset_map(t_fdf *fdf);
 
 /*utils.c*/
 void	base_colours(t_map *map);
-int		error(t_map *map, char *error_msg);
-void	error_mlx(t_fdf *fdf);
+void	set_up_fdf(t_fdf *fdf);
+int		error(t_fdf *fdf, t_map *map, char *error_msg);
+//void	error_mlx(t_fdf *fdf);
 void	this_dot_is_valid(char *str, t_map *map);
 void	uneven(int x, int line_num, t_map *map);
 void	copy_dots(t_dot *src, t_dot *dest, int len);

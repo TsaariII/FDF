@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:39:24 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/04 12:32:54 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:58:45 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	format_validation(char *str)
 
 	len = ft_strlen(str);
 	if (ft_strncmp(&str[len - 4], ".fdf", 4) != 0)
-		error(NULL, "Invalid file format");
+		error(NULL, NULL, "Invalid file format");
 }
 
 void	reset_map(t_fdf *fdf)
@@ -59,6 +59,8 @@ void	reset_map(t_fdf *fdf)
 	int	i;
 
 	i = 0;
+	fdf->map.x_move = 0;
+	fdf->map.y_move = 0;
 	while (i < fdf->map.len)
 	{
 		fdf->map.dots[i] = fdf->map.org_val[i];

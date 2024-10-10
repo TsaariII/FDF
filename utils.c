@@ -6,14 +6,19 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/03 10:35:19 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:01:07 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	error(t_map *map, char *error_msg)
+int	error(t_fdf *fdf, t_map *map, char *error_msg)
 {
+	if (fdf)
+	{
+		mlx_terminate(fdf->mlx);
+		error(NULL, &fdf->map, "MLX error");
+	}
 	if (map)
 	{
 		if (map->map_info)
@@ -38,10 +43,16 @@ void	uneven(int x, int line_num, t_map *map)
 	map->dots[x].axels[Y] = line_num - map->dim.axels[Y] / 2;
 }
 
-void	error_mlx(t_fdf *fdf)
+void	set_up_fdf(t_fdf *fdf)
 {
-	mlx_terminate(fdf->mlx);
-	error(&fdf->map, "MLX error");
+	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FdF", true);
+	if (!fdf->mlx)
+		error(NULL, &fdf->map, NULL);
+	fdf->image = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
+	if (!fdf->image)
+		error(fdf, NULL, NULL);
+	if (mlx_image_to_window(fdf->mlx, fdf->image, 0, 0) < 0)
+		error(fdf, NULL, NULL);
 }
 
 void	this_dot_is_valid(char *str, t_map *map)
@@ -51,12 +62,12 @@ void	this_dot_is_valid(char *str, t_map *map)
 		if (ft_isalnum(*str) || *str == ',' || *str == '-')
 		{
 			if (*str >= 'G' && *str <= 'Z' && *str != 'X')
-				error(map, "Invalid map");
+				error(NULL, map, "Invalid map");
 			if (*str >= 'g' && *str <= 'z' && *str != 'x')
-				error(map, "Invalid map");
+				error(NULL, map, "Invalid map");
 		}
 		else if (*str != 10)
-			error(map, "Invalid map");
+			error(NULL, map, "Invalid map");
 		str++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:25:19 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/07 11:21:53 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:35:45 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	keypress(mlx_key_data_t data, void *param)
 			fdf->map.factor = 1;
 			fdf->map.scale_xy = 1;
 			fdf->map.scale_z = 1;
-			fdf->map.x_move = 0;
-			fdf->map.y_move = 0;
 			reset_map(fdf);
 			colour_dots(&fdf->map, i);
 			make_image(fdf);

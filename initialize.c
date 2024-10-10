@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/07 11:33:29 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:00:25 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@ void	base_colours(t_map *map)
 	map->col.top = BLACK;
 	map->col.bottom = YELLOW;
 	map->col.base = WHITE;
-}
-
-void	set_up_fdf(t_fdf *fdf)
-{
-	fdf->mlx = mlx_init(WIDTH, HEIGHT, "FdF", true);
-	if (!fdf->mlx)
-		error(NULL, "MLX fail");
-	fdf->image = mlx_new_image(fdf->mlx, WIDTH, HEIGHT);
-	if (!fdf->image)
-		error_mlx(fdf);
-	if (mlx_image_to_window(fdf->mlx, fdf->image, 0, 0) < 0)
-		error_mlx(fdf);
 }
 
 void	kick_off_map(t_map *map)
@@ -55,30 +43,40 @@ void	kick_off_map(t_map *map)
 	base_colours(map);
 }
 
+static int	while_in_dimensions(t_map *map, int h, int len)
+{
+	char	**current;
+	int		w;
+
+	while (map->map_info[h])
+	{
+		current = ft_split(map->map_info[h], ' ');
+		if (!current)
+			error(NULL, map, "Malloc fail");
+		w = ft_array_len(current);
+		ft_free_array(current);
+		if (w != len)
+			error(NULL, map, "Inconsistent row length");
+		h++;
+	}
+	return (h);
+}
+
 void	dimensions(t_map *map)
 {
 	int		h;
 	int		w;
 	int		len;
 	char	**first;
-	char	**current;
 
 	h = 0;
 	w = 0;
 	first = ft_split(map->map_info[0], ' ');
 	if (!first)
-		error(map, "Malloc fail");
+		error(NULL, map, "Malloc fail");
 	len = ft_array_len(first);
 	ft_free_array(first);
-	while (map->map_info[h])
-	{
-		current = ft_split(map->map_info[h], ' ');
-		w = ft_array_len(current);
-		ft_free_array(current);
-		if (w != len)
-			error(map, "Inconsistent row length");
-		h++;
-	}
+	h = while_in_dimensions(map, h, len);
 	map->dim.axels[X] = len;
 	map->dim.axels[Y] = h;
 }

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 10:31:08 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/04 14:07:26 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:57:29 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	coordinates(char *line, t_map *map, int line_num)
 	id = line_num * map->dim.axels[X];
 	dots = ft_split(line, ' ');
 	if (!dots)
-		error(map, "Malloc fail");
+		error(NULL, map, "Malloc fail");
 	while (dots[h])
 	{
 		this_dot_is_valid(dots[h], map);
@@ -48,7 +48,7 @@ void	create_coordinates(t_map *map)
 	i = 0;
 	temp = map->map_info;
 	if (map->map_info[i] == NULL)
-		error(NULL, "Invalid map");
+		error(NULL, NULL, "Invalid map");
 	i = 0;
 	while (temp[i])
 	{
@@ -58,30 +58,11 @@ void	create_coordinates(t_map *map)
 	z_values(map, map->dots, map->len);
 }
 
-int	ft_array_len(char **str)
+static void	while_in_read(t_map *map, char *line, int fd)
 {
-	int	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-void	read_data(t_map *map, int fd)
-{
-	char	*line;
 	int		i;
 	char	**temp;
 
-	map->map_info = malloc(1 * sizeof(char *));
-	line = get_next_line(fd);
-	if (!line)
-	{
-		free(line);
-		error(NULL, "Empty file");
-	}
-	map->map_info[0] = line;
 	i = 1;
 	while (line)
 	{
@@ -93,13 +74,31 @@ void	read_data(t_map *map, int fd)
 		{
 			free(line);
 			line = NULL;
-			error(map, "Malloc fail");
+			error(NULL, map, "Malloc fail");
 		}
 		map->map_info = temp;
 		map->map_info[i] = line;
 		if (line)
 			i++;
 	}
+	free(line);
+}
+
+void	read_data(t_map *map, int fd)
+{
+	char	*line;
+	int		i;
+
+	map->map_info = malloc(1 * sizeof(char *));
+	line = get_next_line(fd);
+	if (!line)
+	{
+		free(line);
+		error(NULL, NULL, "Empty file");
+	}
+	map->map_info[0] = line;
+	i = 1;
+	while_in_read(map, line, fd);
 }
 
 void	map_data(t_fdf *fdf, char *file)
@@ -109,7 +108,7 @@ void	map_data(t_fdf *fdf, char *file)
 	kick_off_map(&fdf->map);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		error(&fdf->map, "Open error");
+		error(NULL, &fdf->map, "Open error");
 	read_data(&fdf->map, fd);
 	dimensions(&fdf->map);
 	fdf->map.len = fdf->map.dim.axels[X] * fdf->map.dim.axels[Y];
@@ -117,7 +116,7 @@ void	map_data(t_fdf *fdf, char *file)
 	if (!fdf->map.dots)
 	{
 		ft_free_array(fdf->map.map_info);
-		error(NULL, "Malloc fail");
+		error(NULL, NULL, "Malloc fail");
 	}
 	create_coordinates(&fdf->map);
 	ft_free_array(fdf->map.map_info);

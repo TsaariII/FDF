@@ -64,7 +64,7 @@ OBJS = $(SRC:.c=.o)
 $(NAME): $(OBJS)
 		@echo "\n\033[0;32mLibft ready\033[0m\n"
 		@cc $(OBJS) $(PRINTF) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME) > /dev/null
-		@echo "\n\033[0;32mLet's make some maps!\033[0m\n"
+		@echo "\n\033[0;32mLet's make maps!\033[0m\n"
 
 clean:
 		@rm -f $(OBJS)

@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 10:19:28 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/04 12:29:38 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:24:09 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	z_values(t_map *map, t_dot *dots, int len)
 	int	i;
 
 	i = 0;
+	map->min_z = map->dim.axels[Z];
 	while (i < len)
 	{
 		if (dots[i].axels[Z] < map->min_z)
