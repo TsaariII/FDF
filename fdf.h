@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/10 11:00:40 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:06:55 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_dot
 {
 	int32_t	col;
 	int32_t	col_hex;
-	float	axels[3];
+	float	axis[3];
 }	t_dot;
 
 typedef struct s_map

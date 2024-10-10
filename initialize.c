@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:07:52 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/10 11:00:25 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:07:16 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	kick_off_map(t_map *map)
 {
 	map->map_info = NULL;
 	map->dots = NULL;
-	map->dim.axels[X] = 0;
-	map->dim.axels[Y] = 0;
-	map->dim.axels[Z] = 0;
+	map->dim.axis[X] = 0;
+	map->dim.axis[Y] = 0;
+	map->dim.axis[Z] = 0;
 	map->len = 0;
 	map->scale_xy = 1;
 	map->scale_z = 1;
 	map->min_z = 0;
 	map->factor = 1;
-	map->origo.axels[X] = WIDTH / 2;
-	map->origo.axels[Y] = HEIGHT / 2;
-	map->origo.axels[Z] = 0;
+	map->origo.axis[X] = WIDTH / 2;
+	map->origo.axis[Y] = HEIGHT / 2;
+	map->origo.axis[Z] = 0;
 	map->x_move = 0;
 	map->y_move = 0;
 	map->x_rot = 0;
@@ -77,8 +77,8 @@ void	dimensions(t_map *map)
 	len = ft_array_len(first);
 	ft_free_array(first);
 	h = while_in_dimensions(map, h, len);
-	map->dim.axels[X] = len;
-	map->dim.axels[Y] = h;
+	map->dim.axis[X] = len;
+	map->dim.axis[Y] = h;
 }
 
 void	base_pixel(uint8_t *buffer, int colour, int alpha)

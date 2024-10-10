@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:51:18 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/10 11:01:07 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:07:16 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	error(t_fdf *fdf, t_map *map, char *error_msg)
 
 void	uneven(int x, int line_num, t_map *map)
 {
-	map->dots[x].axels[Z] = 0;
-	map->dots[x].axels[X] = map->dim.axels[X];
-	map->dots[x].axels[Y] = line_num - map->dim.axels[Y] / 2;
+	map->dots[x].axis[Z] = 0;
+	map->dots[x].axis[X] = map->dim.axis[X];
+	map->dots[x].axis[Y] = line_num - map->dim.axis[Y] / 2;
 }
 
 void	set_up_fdf(t_fdf *fdf)

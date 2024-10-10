@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:22:57 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/02 15:39:46 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:07:16 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	compute_outcode(mlx_image_t *img, t_dot *dot)
 	int	code;
 
 	code = INSIDE;
-	if (dot->axels[X] < 1)
+	if (dot->axis[X] < 1)
 		code |= LEFT;
-	if (dot->axels[X] > (img->width - 1))
+	if (dot->axis[X] > (img->width - 1))
 		code |= RIGHT;
-	if (dot->axels[Y] < 1)
+	if (dot->axis[Y] < 1)
 		code |= TOP;
-	if (dot->axels[Y] > (img->height - 1))
+	if (dot->axis[Y] > (img->height - 1))
 		code |= BOTTOM;
 	return (code);
 }

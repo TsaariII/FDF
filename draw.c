@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 09:27:54 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/04 12:33:52 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:07:16 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ static void	draw_line(t_fdf *fdf, t_dot point0, t_dot point1)
 
 	if (!clip_line(fdf->image, &point0, &point1))
 		return ;
-	delta.axels[X] = point1.axels[X] - point0.axels[X];
-	delta.axels[Y] = point1.axels[Y] - point0.axels[Y];
-	line = sqrt((delta.axels[X] * delta.axels[X])
-			+ (delta.axels[Y] * delta.axels[Y]));
+	delta.axis[X] = point1.axis[X] - point0.axis[X];
+	delta.axis[Y] = point1.axis[Y] - point0.axis[Y];
+	line = sqrt((delta.axis[X] * delta.axis[X])
+			+ (delta.axis[Y] * delta.axis[Y]));
 	len = line;
-	delta.axels[X] /= line;
-	delta.axels[Y] /= line;
-	dot.axels[X] = point0.axels[X];
-	dot.axels[Y] = point0.axels[Y];
+	delta.axis[X] /= line;
+	delta.axis[Y] /= line;
+	dot.axis[X] = point0.axis[X];
+	dot.axis[Y] = point0.axis[Y];
 	while (line > 0)
 	{
 		dot.col = gradient(point0.col, point1.col, len, len - line);
-		place_dot(fdf->image, dot.axels[X], dot.axels[Y], dot.col);
-		dot.axels[X] += delta.axels[X];
-		dot.axels[Y] += delta.axels[Y];
+		place_dot(fdf->image, dot.axis[X], dot.axis[Y], dot.col);
+		dot.axis[X] += delta.axis[X];
+		dot.axis[Y] += delta.axis[Y];
 		line -= 1;
 	}
 }
@@ -61,8 +61,8 @@ void	draw_map(t_fdf *fdf, t_dot *dots)
 
 	x = 0;
 	y = 0;
-	width = fdf->map.dim.axels[X];
-	height = fdf->map.dim.axels[Y];
+	width = fdf->map.dim.axis[X];
+	height = fdf->map.dim.axis[Y];
 	while (y < height)
 	{
 		x = 0;
