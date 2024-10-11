@@ -6,15 +6,18 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:45:23 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/07 11:59:42 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:24:30 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "ft_printf/ft_printf.h"
+# include "get_next_line/get_next_line.h"
 
 typedef struct s_list
 {

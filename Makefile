@@ -12,8 +12,6 @@ SRC =	fdf.c\
 		rotation.c\
 		rotation2.c\
 		utils.c\
-		get_next_line/get_next_line.c\
-		get_next_line/get_next_line_utils.c
 
 FLAGS = -Wall -Werror -Wextra -g
 
@@ -22,10 +20,6 @@ OFLAGS = -ldl -lglfw -pthread -lm
 LIBFT = $(LIBFT_DIR)/libft.a
 
 LIBFT_DIR = ./libft
-
-PRINTF = $(PRINTF_DIR)/libftprintf.a
-
-PRINTF_DIR = ./ft_printf
 
 MLX = ./MLX42
 
@@ -37,7 +31,7 @@ HEADS = -I. $(MLX_HEAD) -I$(LIBFT_DIR)
 
 MAKEFLAGS += --no-print-directory
 
-all: $(PRINTF) $(LIBFT) $(LIBMLX) $(NAME)
+all: $(LIBFT) $(LIBMLX) $(NAME)
 
 $(LIBMLX):
 		@if [ ! -d "$(MLX)" ]; then \
@@ -53,9 +47,6 @@ $(LIBMLX):
 $(LIBFT):
 		@$(MAKE) -C $(LIBFT_DIR)
 
-$(PRINTF):
-		@$(MAKE) -C $(PRINTF_DIR)
-
 OBJS = $(SRC:.c=.o)
 
 %.o: %.c
@@ -63,19 +54,17 @@ OBJS = $(SRC:.c=.o)
 
 $(NAME): $(OBJS)
 		@echo "\n\033[0;32mLibft ready\033[0m\n"
-		@cc $(OBJS) $(PRINTF) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME) > /dev/null
+		@cc $(OBJS) $(LIBMLX) $(LIBFT) $(OFLAGS) -o $(NAME) > /dev/null
 		@echo "\n\033[0;32mLet's make maps!\033[0m\n"
 
 clean:
 		@rm -f $(OBJS)
 		@rm -rf $(MLX)/build
 		@$(MAKE) -C $(LIBFT_DIR) clean
-		@$(MAKE) -C $(PRINTF_DIR) clean
 
 fclean:
 		@rm -f $(NAME)
 		@rm -f $(OBJS)
-		@$(MAKE) -C $(PRINTF_DIR) fclean
 		@$(MAKE) -C $(LIBFT_DIR) fclean
 		@rm -rf $(MLX)
 		@rm -f fdf.a

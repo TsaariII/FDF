@@ -13,11 +13,28 @@ SRC		= ft_array_len.c\
 		ft_isdigit.c\
 		ft_isprint.c\
 		ft_itoa.c\
+		ft_lstadd_back.c\
+		ft_lstadd_front.c\
+		ft_lstclear.c\
+		ft_lstdelone.c\
+		ft_lstiter.c\
+		ft_lstlast.c\
+		ft_lstmap.c\
+		ft_lstnew.c\
+		ft_lstsize.c\
 		ft_memchr.c\
 		ft_memcmp.c\
 		ft_memcpy.c\
 		ft_memmove.c\
 		ft_memset.c\
+		ft_printf/ft_printf.c\
+		ft_printf/check_f.c\
+		ft_printf/is_char.c\
+		ft_printf/is_hex.c\
+		ft_printf/is_nbr.c\
+		ft_printf/is_pointer.c\
+		ft_printf/is_str.c\
+		ft_printf/is_unsignbr.c\
 		ft_putchar_fd.c\
 		ft_putendl_fd.c\
 		ft_putnbr_fd.c\
@@ -39,21 +56,11 @@ SRC		= ft_array_len.c\
 		ft_strtrim.c\
 		ft_substr.c\
 		ft_tolower.c\
-		ft_toupper.c
-
-BONUS_SRCS	= ft_lstadd_back_bonus.c\
-			ft_lstadd_front_bonus.c\
-			ft_lstclear_bonus.c\
-			ft_lstdelone_bonus.c\
-			ft_lstiter_bonus.c\
-			ft_lstlast_bonus.c\
-			ft_lstmap_bonus.c\
-			ft_lstnew_bonus.c\
-			ft_lstsize_bonus.c
+		ft_toupper.c\
+		get_next_line/get_next_line.c\
+		get_next_line/get_next_line_utils.c
 
 OBJS	= $(SRC:.c=.o)
-
-BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 
 HEAD	= ./libft
 
@@ -71,17 +78,12 @@ all:	$(NAME)
 $(NAME):	$(OBJS)
 				$(AR) $(NAME) $(OBJS)
 
-bonus:	.bonus
-
-.bonus: $(OBJS) $(BONUS_OBJS)
-		@touch .bonus;
-		$(AR) $(NAME) $(BONUS_OBJS)
 clean:
-		@rm -f $(OBJS) $(BONUS_OBJS) .bonus
+		@rm -f $(OBJS) $(BONUS_OBJS)
 
 fclean:	clean
 		@rm -f $(NAME)
 
 re:		fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re
