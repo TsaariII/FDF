@@ -6,7 +6,7 @@
 /*   By: nzharkev <nzharkev@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 12:54:44 by nzharkev          #+#    #+#             */
-/*   Updated: 2024/10/11 13:23:39 by nzharkev         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:17:31 by nzharkev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <stdint.h>
 # include <math.h>
-# include <stdio.h>
+//# include <stdio.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -66,7 +66,7 @@ typedef struct s_dot
 {
 	int32_t	col;
 	int32_t	col_hex;
-	float	axis[3];
+	double	axis[3];
 }	t_dot;
 
 typedef struct s_map
